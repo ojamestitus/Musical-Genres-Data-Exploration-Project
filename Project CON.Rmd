@@ -48,7 +48,14 @@ Explore track artist of different genre.
 
 Explore a potential relationship between tempo and song duration.
 
-Explore a potential relationship between tempo and danceability,
+Explore a potential relationship between tempo and dancibility,
+
+Explore the dancibility, energy, key,mode, speechiness, etc based on genre.
+
+Explore the relationship between dancibility and loudness.
+
+Explore the relationship between dancibility and temp.
+
 
 ## Group Members
 List all of the project contributors here.
