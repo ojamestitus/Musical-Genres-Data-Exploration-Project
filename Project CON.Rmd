@@ -32,7 +32,7 @@ Once you have received feedback on your project proposal (via Canvas) you may al
 spotify_songs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-21/spotify_songs.csv')
 
 Data from TidyTuesday about songs on Spotify.
-There are many variables included, but we are specifically interested in duration of the song, genre, artist, popularity, and release date. 
+There are many variables included which are all described by TidyTuesday in the 01-21-2020 folder titled song genres.
 
 
 ## Potential Topics to Explore Using the Data Set
@@ -45,6 +45,10 @@ Explore the popularity of each genre.
 Explore the loudness of different genre.
 
 Explore track artist of different genre.
+
+Explore a potential relationship between tempo and song duration.
+
+Explore a potential relationship between tempo and danceability,
 
 ## Group Members
 List all of the project contributors here.
