@@ -29,6 +29,7 @@ Once you have received feedback on your project proposal (via Canvas) you may al
 
 ## Data Set
 
+spotify_songs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-21/spotify_songs.csv')
 
 Data from TidyTuesday about songs on Spotify.
 There are many variables included, but we are specifically interested in duration of the song, genre, artist, popularity, and release date. 
@@ -38,6 +39,8 @@ There are many variables included, but we are specifically interested in duratio
 Describe avenues you might explore using the data
 
 Exploring if there is difference in song length based on genre.
+
+Explore the popularity of each genre.
 
 
 ## Group Members
