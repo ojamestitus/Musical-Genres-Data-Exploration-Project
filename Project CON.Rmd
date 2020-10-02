@@ -29,9 +29,10 @@ Once you have received feedback on your project proposal (via Canvas) you may al
 
 ## Data Set
 
-https://raw.githubusercontent.com/stat850-unl/project-team-con/master/crops.csv
 
-Data is from Food and Agriculture Organization of the United Nations(FAO). We selected Canada and the United States for countries to study. We are looking at 5 crops that are commonly produced in Nebraska: Wheat, Maize(corn), Soybeans, Sugar Beets, and Sorghum. We selected all three elements provided by FAO which include: Area Harvested, Yield, and Production Quantity. These are listed in the value column of the csv that we are working with. We are looking at 40 years worth of data. The units for yield are per hectare 
+Data from TidyTuesday about songs on Spotify.
+There are many variables included, but we are specifically interested in duration of the song, genre, artist, popularity, and release date. 
+
 
 ## Potential Topics to Explore Using the Data Set
 Describe avenues you might explore using the data
