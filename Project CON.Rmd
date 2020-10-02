@@ -1,6 +1,6 @@
 ---
 title: "Stat 850 Project Description"
-author: "Neetu Regmi, Cassie Tangen, ..."
+author: "Neetu Regmi, Cassie Tangen, Oliver Titus ..."
 output: github_document
 ---
 
