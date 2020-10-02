@@ -42,7 +42,12 @@ Exploring if there is difference in song length based on genre.
 
 Explore the popularity of each genre.
 
+Explore the loudness of different genre.
+
+Explore track artist of different genre.
 
 ## Group Members
 List all of the project contributors here.
-
+Neetu Regmi 
+Oliver Titus 
+Cassie Tangen
