@@ -37,6 +37,9 @@ There are many variables included, but we are specifically interested in duratio
 ## Potential Topics to Explore Using the Data Set
 Describe avenues you might explore using the data
 
+Exploring if there is difference in song length based on genre.
+
+
 ## Group Members
 List all of the project contributors here.
 
