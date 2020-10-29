@@ -28,8 +28,10 @@ Note that you must compile your readme (this document) for it to properly displa
 Once you have received feedback on your project proposal (via Canvas) you may alter this README so that it describes your final project instead of the project proposal. 
 
 ## Data Set
-
+```{r}
 spotify_songs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-21/spotify_songs.csv')
+```
+
 
 Data from TidyTuesday about songs on Spotify.
 There are many variables included which are all described by TidyTuesday in the 01-21-2020 folder titled song genres.
@@ -38,17 +40,35 @@ There are many variables included which are all described by TidyTuesday in the 
 ## Potential Topics to Explore Using the Data Set
 Describe avenues you might explore using the data
 
+Cassie:
 Exploring if there is difference in song length based on genre.
+```{r}
+library(ggplot2)
+#summary(spotify_songs)
+ggplot(spotify_songs, aes(x=duration_ms, fill=playlist_genre)) + geom_histogram(bins=30)
+```
+
 
 Explore the popularity of each genre.
+```{r}
+#summary(spotify_songs)
+ggplot(spotify_songs, aes(x=track_popularity, fill=playlist_genre)) + geom_histogram(bins=30)
+```
 
 Explore the loudness of different genre.
+```{r}
+#summary(spotify_songs)
+ggplot(spotify_songs, aes(x=loudness, fill=playlist_genre)) + geom_histogram(bins=30)
+```
+
 
 Explore track artist of different genre.
 
 Explore a potential relationship between tempo and song duration.
 
 Explore a potential relationship between tempo and dancibility,
+
+
 
 Explore the dancibility, energy, key,mode, speechiness, etc based on genre.
 
