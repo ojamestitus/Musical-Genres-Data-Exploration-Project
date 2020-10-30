@@ -43,23 +43,106 @@ Describe avenues you might explore using the data
 Cassie:
 Exploring if there is difference in song length based on genre.
 ```{r}
-library(ggplot2)
-#summary(spotify_songs)
-ggplot(spotify_songs, aes(x=duration_ms, fill=playlist_genre)) + geom_histogram(bins=30)
+library(tidyverse)
+ggplot(spotify_songs, aes(x=duration_ms, fill=playlist_genre)) + geom_boxplot()
 ```
+
+I decided to use a stacked boxplot to look at and compare the duration of the song duration in milliseconds of each different genre. It appears that rock and R&B have the longest durations and EDM is the shortest.
+
+Create a few data frames that have been filtered for each genre. This will aid in calculations later.
+```{r}
+spotify_songs_edm<-filter(spotify_songs, playlist_genre=="edm")
+spotify_songs_latin<-filter(spotify_songs, playlist_genre=="latin")
+spotify_songs_pop<-filter(spotify_songs, playlist_genre=="pop")
+spotify_songs_rb<-filter(spotify_songs, playlist_genre=="r&b")
+spotify_songs_rap<-filter(spotify_songs, playlist_genre=="rap")
+spotify_songs_rock<-filter(spotify_songs, playlist_genre=="rock")
+
+```
+
+Find out how tracks there are for each genre. This may be useful later.
+```{r}
+count_edm<-as.double(count(spotify_songs_edm))
+count_latin<-as.double(count(spotify_songs_latin))
+count_pop<-as.double(count(spotify_songs_pop))
+count_rb<-as.double(count(spotify_songs_rb))
+count_rap<-as.double(count(spotify_songs_rap))
+count_rock<-as.double(count(spotify_songs_rock))
+
+
+count<-c(count_edm,count_latin,count_pop,count_rb,count_rap,count_rock)
+
+```
+
+
+Let's look closer by looking numerically at the means. I'm also curious about how many songs there are for each genre so I am going to find the number of songs in each genre now as well. I will put the data into a table called genre_table
+```{r}
+# find mean duration in ms then change to min by /1.667*10^{-5}
+
+mean_duration_edm<-mean(spotify_songs_edm$duration_ms)
+mean_duration_latin<-mean(spotify_songs_latin$duration_ms)
+mean_duration_pop<-mean(spotify_songs_pop$duration_ms)
+mean_duration_rb<-mean(spotify_songs_rb$duration_ms)
+mean_duration_rap<-mean(spotify_songs_rap$duration_ms)
+mean_duration_rock<-mean(spotify_songs_rock$duration_ms)
+
+mean_duration<-c(mean_duration_edm/1.667*10^{-5},mean_duration_latin/1.667*10^{-5},mean_duration_pop/1.667*10^{-5},mean_duration_rb/1.667*10^{-5},mean_duration_rap/1.667*10^{-5},mean_duration_rock/1.667*10^{-5})
+
+genre<-c("EDM","Latin","Pop","R&B","Rap","Rock")
+
+genre_table<-tibble(genre,mean_duration)
+print(genre_table)
+
+```
+
+It appears that the genre with the longest songs is rock and the genre with the shortest songs is rap. Would be interesting to perform a hypothesis test to see if there is a statitical difference between the lengths of songs.
 
 
 Explore the popularity of each genre.
 ```{r}
-#summary(spotify_songs)
-ggplot(spotify_songs, aes(x=track_popularity, fill=playlist_genre)) + geom_histogram(bins=30)
+ggplot(spotify_songs, aes(x=track_popularity, fill=playlist_genre)) + geom_boxplot()
 ```
+It appears that pop and latin on average are more popular and EDM is the least popular.
+Let's go ahead and calculate mean popularity and add it to the genre table
+
+```{r}
+mean_popularity_edm<-mean(spotify_songs_edm$track_popularity)
+mean_popularity_latin<-mean(spotify_songs_latin$track_popularity)
+mean_popularity_pop<-mean(spotify_songs_pop$track_popularity)
+mean_popularity_rb<-mean(spotify_songs_rb$track_popularity)
+mean_popularity_rap<-mean(spotify_songs_rap$track_popularity)
+mean_popularity_rock<-mean(spotify_songs_rock$track_popularity)
+
+mean_popularity<-c(mean_popularity_edm,mean_popularity_latin,mean_popularity_pop,mean_popularity_rb,mean_popularity_rap,mean_popularity_rock)
+
+
+genre_table<-tibble(genre,mean_duration)%>% mutate(mean_popularity)%>%mutate(count)
+print(genre_table)
+```
+It appears that EDM is the least popular on average, but it has the most songs so that could be impacting the popularity. I would be interested in performing a hypothesis test to see if EDM's mean popularity is statistically different than that of the others that all appear to be roughly the same popularity-wise.
+
 
 Explore the loudness of different genre.
 ```{r}
-#summary(spotify_songs)
-ggplot(spotify_songs, aes(x=loudness, fill=playlist_genre)) + geom_histogram(bins=30)
+ggplot(spotify_songs, aes(x=loudness, fill=playlist_genre)) + geom_boxplot()
 ```
+EDM appears to be the loudest with R&B the least loud. Let's look at the means numerically as well.
+```{r}
+mean_loud_edm<-mean(spotify_songs_edm$loudness)
+mean_loud_latin<-mean(spotify_songs_latin$loudness)
+mean_loud_pop<-mean(spotify_songs_pop$loudness)
+mean_loud_rb<-mean(spotify_songs_rb$loudness)
+mean_loud_rap<-mean(spotify_songs_rap$loudness)
+mean_loud_rock<-mean(spotify_songs_rock$loudness)
+
+mean_loudness<-c(mean_loud_edm,mean_loud_latin,mean_loud_pop,mean_loud_rb,mean_loud_rap,mean_loud_rock)
+
+genre_table<-tibble(genre,mean_duration)%>% mutate(mean_popularity)%>%mutate(mean_loudness)%>%mutate(count)
+print(genre_table)
+```
+It seems R&B is the least loud and EDM is the loudest. There is not a huge spread between genre's for loudness, but it does seem that EDM is a decent amount louder than the other varieties. I would be interesting in running a hypothesis test here as well.
+
+
 
 
 Explore track artist of different genre.
