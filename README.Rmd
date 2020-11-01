@@ -144,12 +144,46 @@ It seems R&B is the least loud and EDM is the loudest. There is not a huge sprea
 
 
 
+Neetu:
+1.Explore the relationship between playlist subgenre and track popularity .
 
-Explore track artist of different genre.
+```{r}
+library(ggthemes)
+ggplot(spotify_songs, aes(x=playlist_subgenre, y=track_popularity)) + 
+  geom_point(size = 2,color="orange") + 
+  geom_segment(aes(x=playlist_subgenre, 
+                   xend=playlist_subgenre, 
+                   y=0, 
+                   yend=track_popularity)) + 
+  labs(title="Lollipop Chart", 
+       subtitle="Popularity of song on spotify", 
+       caption="source: Spotify data") + 
+  theme(axis.text.x = element_text(angle=80, vjust=0.6))
+```
+Some extra info on the values of track popularity:The score is received from the Spotify API. The value will be between 0 and 100, with 100 being the most popular.The popularity is calculated by algorithm and is based, in the most part, on the total number of plays the track has had and how recent those plays are.
+From the above chart, It seems that most of the playlist subgenere popularity lies between 75 and 100. Some of those are dance pop, post-teen pop, pop edm, latin hip hop, hip hop while the lowest popularity are around 75  like new jack swing, hard rock. I would say according to the chart popularity of song among subgenre are not extremely varied. 
 
-Explore a potential relationship between tempo and song duration.
 
-Explore a potential relationship between tempo and dancibility,
+2.Explore a potential relationship between mode and song key.
+
+```{r}
+p1 <- ggplot() + 
+    geom_line(aes(y = key, x = mode), data = spotify_songs,col="orange") +
+    theme(text=element_text(family="Tahoma"))
+p1 + labs(title = "Relationship between key and mode", x = "mode", y = "key", caption = "Data: spotify")
+```
+This chart shows the relationship that for mode 0 and 1, the key varies. By looking at the vertical line, we could say that variability within mode 0 and 1 looks similar because they both vary on different value of key.
+
+
+
+Explore a potential relationship between energy and danceability,
+```{r}
+ggplot(spotify_songs, aes(x=danceability, y=energy, col= "orange")) + 
+    geom_point()
+```
+This scatterplot shows the relationship between danceability and energy also we can see that highest number of observation falls around when both danceability and energy are above 0.50.This suggests that we can expect that high value of danceability will likely have high value of energy ignoring some outliers.
+Also, I wanted to circle the region that has large number of points cluster together, tried few things to get some sort of outline to focus on that region didn't work, was unsuccessful.
+
 
 
 
