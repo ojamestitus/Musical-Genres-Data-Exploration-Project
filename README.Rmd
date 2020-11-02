@@ -185,14 +185,164 @@ This scatterplot shows the relationship between danceability and energy also we 
 Also, I wanted to circle the region that has large number of points cluster together, tried few things to get some sort of outline to focus on that region didn't work, was unsuccessful.
 
 
+Oliver:
 
+1. Explore the dancibility, energy, key,mode, speechiness, etc based on genre.
 
-Explore the dancibility, energy, key,mode, speechiness, etc based on genre.
+Box plot:
 
-Explore the relationship between dancibility and loudness.
+```{r}
+ggplot(spotify_songs, aes(y=danceability, fill=playlist_genre)) + 
+    geom_boxplot()
+```
 
-Explore the relationship between dancibility and temp.
+## Summary statistics for danceability for each genre:
 
+### EDM
+```{r}
+summary(spotify_songs_edm$danceability)
+```
+### Latin
+
+```{r}
+summary(spotify_songs_latin$danceability)
+```
+
+### Pop
+
+```{r}
+summary(spotify_songs_pop$danceability)
+```
+
+### R&B
+```{r}
+summary(spotify_songs_rb$danceability)
+```
+
+### Rap
+
+```{r}
+summary(spotify_songs_rap$danceability)
+```
+
+### Rock
+
+```{r}
+summary(spotify_songs_rock$danceability)
+```
+
+We see that rap has the highest mean danceability and rock has the lowest mean danceabiltiy according the summary statistics and the box plot.
+Box plot:
+
+```{r}
+ggplot(spotify_songs, aes(y=energy, fill=playlist_genre)) + 
+    geom_boxplot()
+```
+
+## Summary statistics for energy for each genre:
+
+### EDM
+```{r}
+summary(spotify_songs_edm$energy)
+```
+### Latin
+
+```{r}
+summary(spotify_songs_latin$energy)
+```
+
+### Pop
+
+```{r}
+summary(spotify_songs_pop$energy)
+```
+
+### R&B
+```{r}
+summary(spotify_songs_rb$energy)
+```
+
+### Rap
+
+```{r}
+summary(spotify_songs_rap$energy)
+```
+
+### Rock
+
+```{r}
+summary(spotify_songs_rock$energy)
+```
+
+EDM appears has the highest mean energy according to the summary statistics and box plot, and R&B has the lowest mean energy.
+Box plot:
+
+```{r}
+ggplot(spotify_songs, aes(y=speechiness, fill=playlist_genre)) + 
+    geom_boxplot()
+```
+
+## Summary statistics for speechiness for each genre:
+
+### EDM
+```{r}
+summary(spotify_songs_edm$speechiness)
+```
+### Latin
+
+```{r}
+summary(spotify_songs_latin$speechiness)
+```
+
+### Pop
+
+```{r}
+summary(spotify_songs_pop$speechiness)
+```
+
+### R&B
+```{r}
+summary(spotify_songs_rb$speechiness)
+```
+
+### Rap
+
+```{r}
+summary(spotify_songs_rap$speechiness)
+```
+
+### Rock
+
+```{r}
+summary(spotify_songs_rock$speechiness)
+```
+
+Every genre seems to have a very similar amount of speechiness, although rap seems to have significantly higher mean speechiness than the other genres.
+
+2. Explore the relationship between danceability and loudness.
+
+```{r}
+ggplot(spotify_songs, aes(x=loudness, y=danceability)) + 
+    geom_point() + geom_smooth(method=lm)
+```
+
+```{r}
+summary(lm(data=spotify_songs, danceability~loudness))
+```
+
+Looking at the scatter plot, there appears to be no significant relationship between loudness and danceability because of the coefficient on loudness and the R^2 being almost 0.
+3. Explore the relationship between danceability and tempo.
+
+```{r}
+ggplot(spotify_songs, aes(x=tempo, y=danceability)) + 
+    geom_point() + geom_smooth(method=lm)
+```
+
+```{r}
+summary(lm(data=spotify_songs, danceability~tempo))
+```
+
+According to this regression output, there appears to be a significant negative relationship between danceability and tempo because of the negative and significant coeffiecient on loudness. But, the R^2 is quite small, so most of the variability in danceability is not explained by tempo. This is also apparent in the scatter plot.
 
 ## Group Members
 List all of the project contributors here.
