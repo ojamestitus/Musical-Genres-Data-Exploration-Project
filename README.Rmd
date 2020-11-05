@@ -36,6 +36,7 @@ spotify_songs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascie
 Data from TidyTuesday about songs on Spotify.
 There are many variables included which are all described by TidyTuesday in the 01-21-2020 folder titled song genres.
 
+> You'll want to describe the variables you're interested in and talk a bit about how the data were assembled. You can use the tidytuesday page as a reference, but you'll want to write this out in your own words. 
 
 ## Potential Topics to Explore Using the Data Set
 Describe avenues you might explore using the data
@@ -73,7 +74,7 @@ count_rock<-as.double(count(spotify_songs_rock))
 count<-c(count_edm,count_latin,count_pop,count_rb,count_rap,count_rock)
 
 ```
-
+> Some of this would be a lot easier if you use group_by! Right now you're doing it by hand!
 
 Let's look closer by looking numerically at the means. I'm also curious about how many songs there are for each genre so I am going to find the number of songs in each genre now as well. I will put the data into a table called genre_table
 ```{r}
@@ -166,6 +167,12 @@ From the above chart, It seems that most of the playlist subgenere popularity li
 
 2.Explore a potential relationship between mode and song key.
 
+> You'll need to clean this data. Key should be A, B, C, D, E, F, G + flat/sharp. The numbers likely are factor categories, and you probably need the label. See the tidytuesday documentation
+
+> Similarly, mode is also likely to be categorical: https://en.wikipedia.org/wiki/Mode_(music). From looking at the documentation, it appears they're misusing the term mode to represent major (1) or minor(0). If that's the case, you might have better luck looking at the mode as it relates to genre - certain genres are much more likely to use minor keys (they have a sad, haunting sound, usually), where I'd assume pop and other upbeat stuff would be more likely to use a major key.
+
+
+
 ```{r}
 p1 <- ggplot() + 
     geom_line(aes(y = key, x = mode), data = spotify_songs,col="orange") +
@@ -174,16 +181,19 @@ p1 + labs(title = "Relationship between key and mode", x = "mode", y = "key", ca
 ```
 This chart shows the relationship that for mode 0 and 1, the key varies. By looking at the vertical line, we could say that variability within mode 0 and 1 looks similar because they both vary on different value of key.
 
+> You're plotting this as a numeric variable when neither variable is actually numeric. Please revise and treat this as a categorical variable!
+
 
 
 Explore a potential relationship between energy and danceability,
 ```{r}
-ggplot(spotify_songs, aes(x=danceability, y=energy, col= "orange")) + 
-    geom_point()
+ggplot(spotify_songs, aes(x=danceability, y=energy)) + 
+    geom_hex() + scale_fill_continuous(trans = "log10")
 ```
 This scatterplot shows the relationship between danceability and energy also we can see that highest number of observation falls around when both danceability and energy are above 0.50.This suggests that we can expect that high value of danceability will likely have high value of energy ignoring some outliers.
 Also, I wanted to circle the region that has large number of points cluster together, tried few things to get some sort of outline to focus on that region didn't work, was unsuccessful.
 
+> I've used a binned plot to deal with the overplotting here - you see that there's a big region of points, but no clear linear relationship - just a big point cloud. 
 
 Oliver:
 
