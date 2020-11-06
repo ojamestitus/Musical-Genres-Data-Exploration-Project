@@ -359,3 +359,46 @@ List all of the project contributors here.
 Neetu Regmi 
 Oliver Titus 
 Cassie Tangen
+
+## Cassie’s plan to make things cohesive:
+
+
+We should look at the following:
+
+Genre: danceability, energy, speechiness, 
+(Oliver has done) 
+popularity, length, and loudness.
+	(Cassie has done)
+
+Create a scatterplot and perform a test to see if there is a relationship between popularity and each of the following: danceability, energy, speechiness, length, and loudness. 
+(Neetu you have done a scatterplot within your work could you modify that to look at each of these?)
+
+
+
+
+## A rough draft of “paper” portion:
+(this will get intergrated above as we clean things up and oragnize later.)
+
+Introduction:
+
+There are a wide range of genres and each genre has its own unique traits that sets it apart from the other genres.  We plan to investigate what makes rock, R&B, rap, EDM, latin, and pop different based on their length, danceability, energy, and loudness. We will then analyze the popularity of each genre. Based on their popularities we will look to see which factor plays the most important roll, if any does, in the popularity of songs.
+
+
+Data Description:
+
+The data we are analyzing was obtained from TidyTuesday. The data was obtained by using the spotifyr package created by Charlie Thompson, Josiah Parry, Donal Phipps, and Tom Wolff. The spotifyr package allows the bulk pulling of features tracks from Spotify’s Web API. Since we are novices at using new packages, we decided just using the data collected by TidyTuesday using spotifyr would be sufficient for our study. We do recognize the fact that there is a potential bias to the data we are analyzing because we are not aware of the search parameters used by TidyTuesday when collecting this data using spotifyr.
+
+In our study we will focus on the danceability, energy, speechiness, popularity, length, and loudness of songs. We will primarily group data based on the song’s genre.
+
+We need to find a properly cite all of the definitions. (use: https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-21)
+
+
+
+Format of the rest of the paper I am unsure of how to make super cohesive, but I could see us going through and doing the scatter plot and listing some descriptive statistics followed by the hypothesis test for each of the items listed above. We want to be sure everything is relevant to what we are studying.
+
+
+## References:
+TidyTuesday: https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-21
+
+Spotifyr: https://www.rcharlie.com/spotifyr/
+

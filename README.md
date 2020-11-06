@@ -18,24 +18,22 @@ instead of the project proposal.
 
 ## Data Set
 
-``` 
+    Parsed with column specification:
+    cols(
+      .default = col_double(),
+      track_id = col_character(),
+      track_name = col_character(),
+      track_artist = col_character(),
+      track_album_id = col_character(),
+      track_album_name = col_character(),
+      track_album_release_date = col_character(),
+      playlist_name = col_character(),
+      playlist_id = col_character(),
+      playlist_genre = col_character(),
+      playlist_subgenre = col_character()
+    )
 
-── Column specification ────────────────────────────────────────────────────────
-cols(
-  .default = col_double(),
-  track_id = col_character(),
-  track_name = col_character(),
-  track_artist = col_character(),
-  track_album_id = col_character(),
-  track_album_name = col_character(),
-  track_album_release_date = col_character(),
-  playlist_name = col_character(),
-  playlist_id = col_character(),
-  playlist_genre = col_character(),
-  playlist_subgenre = col_character()
-)
-ℹ Use `spec()` for the full column specifications.
-```
+    See spec(...) for full column specifications.
 
 Data from TidyTuesday about songs on Spotify. There are many variables
 included which are all described by TidyTuesday in the 01-21-2020 folder
@@ -52,16 +50,14 @@ Describe avenues you might explore using the data
 
 Cassie: Exploring if there is difference in song length based on genre.
 
-    ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
+    -- Attaching packages ------------------------------------------------------------------------------ tidyverse 1.3.0 --
 
-``` 
-✓ ggplot2 3.3.2.9000     ✓ purrr   0.3.4     
-✓ tibble  3.0.4          ✓ dplyr   1.0.2     
-✓ tidyr   1.1.2          ✓ stringr 1.4.0     
-✓ readr   1.4.0          ✓ forcats 0.5.0     
-```
+    v ggplot2 3.3.2     v purrr   0.3.4
+    v tibble  3.0.3     v dplyr   1.0.2
+    v tidyr   1.1.1     v stringr 1.4.0
+    v readr   1.3.1     v forcats 0.5.0
 
-    ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    -- Conflicts --------------------------------------------------------------------------------- tidyverse_conflicts() --
     x dplyr::filter() masks stats::filter()
     x dplyr::lag()    masks stats::lag()
 
@@ -144,6 +140,8 @@ running a hypothesis test here as well.
 Neetu: 1.Explore the relationship between playlist subgenre and track
 popularity .
 
+    Warning: package 'ggthemes' was built under R version 4.0.3
+
 ![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- --> Some extra
 info on the values of track popularity:The score is received from the
 Spotify API. The value will be between 0 and 100, with 100 being the
@@ -158,12 +156,88 @@ extremely varied.
 
 2.Explore a potential relationship between mode and song key.
 
+> You’ll need to clean this data. Key should be A, B, C, D, E, F, G +
+> flat/sharp. The numbers likely are factor categories, and you probably
+> need the label. See the tidytuesday documentation
+
+> Similarly, mode is also likely to be categorical:
+> <https://en.wikipedia.org/wiki/Mode_(music)>. From looking at the
+> documentation, it appears they’re misusing the term mode to represent
+> major (1) or minor(0). If that’s the case, you might have better luck
+> looking at the mode as it relates to genre - certain genres are much
+> more likely to use minor keys (they have a sad, haunting sound,
+> usually), where I’d assume pop and other upbeat stuff would be more
+> likely to use a major key.
+
+    Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family not
+    found in Windows font database
+    
+    Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family not
+    found in Windows font database
+    
+    Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family not
+    found in Windows font database
+
+    Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+    family not found in Windows font database
+    
+    Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+    family not found in Windows font database
+    
+    Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+    family not found in Windows font database
+    
+    Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+    family not found in Windows font database
+    
+    Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+    family not found in Windows font database
+    
+    Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+    family not found in Windows font database
+    
+    Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+    family not found in Windows font database
+    
+    Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+    family not found in Windows font database
+    
+    Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+    family not found in Windows font database
+    
+    Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+    family not found in Windows font database
+    
+    Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+    family not found in Windows font database
+    
+    Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+    family not found in Windows font database
+
+    Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+    font family not found in Windows font database
+
+    Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+    family not found in Windows font database
+    
+    Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+    family not found in Windows font database
+
 ![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- --> This chart
 shows the relationship that for mode 0 and 1, the key varies. By looking
 at the vertical line, we could say that variability within mode 0 and 1
 looks similar because they both vary on different value of key.
 
+> You’re plotting this as a numeric variable when neither variable is
+> actually numeric. Please revise and treat this as a categorical
+> variable\!
+
 Explore a potential relationship between energy and danceability,
+
+    Warning: Computation failed in `stat_binhex()`:
+      Package `hexbin` required for `stat_binhex`.
+      Please install and try again.
+
 ![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- --> This
 scatterplot shows the relationship between danceability and energy also
 we can see that highest number of observation falls around when both
@@ -172,6 +246,10 @@ that high value of danceability will likely have high value of energy
 ignoring some outliers. Also, I wanted to circle the region that has
 large number of points cluster together, tried few things to get some
 sort of outline to focus on that region didn’t work, was unsuccessful.
+
+> I’ve used a binned plot to deal with the overplotting here - you see
+> that there’s a big region of points, but no clear linear relationship
+> - just a big point cloud.
 
 Oliver:
 
@@ -398,3 +476,63 @@ tempo. This is also apparent in the scatter plot.
 
 List all of the project contributors here. Neetu Regmi Oliver Titus
 Cassie Tangen
+
+## Cassie’s plan to make things cohesive:
+
+We should look at the following:
+
+Genre: danceability, energy, speechiness, (Oliver has done) popularity,
+length, and loudness. (Cassie has done)
+
+Create a scatterplot and perform a test to see if there is a
+relationship between popularity and each of the following: danceability,
+energy, speechiness, length, and loudness. (Neetu you have done a
+scatterplot within your work could you modify that to look at each of
+these?)
+
+## A rough draft of “paper” portion:
+
+(this will get intergrated above as we clean things up and oragnize
+later.)
+
+Introduction:
+
+There are a wide range of genres and each genre has its own unique
+traits that sets it apart from the other genres. We plan to investigate
+what makes rock, R\&B, rap, EDM, latin, and pop different based on their
+length, danceability, energy, and loudness. We will then analyze the
+popularity of each genre. Based on their popularities we will look to
+see which factor plays the most important roll, if any does, in the
+popularity of songs.
+
+Data Description:
+
+The data we are analyzing was obtained from TidyTuesday. The data was
+obtained by using the spotifyr package created by Charlie Thompson,
+Josiah Parry, Donal Phipps, and Tom Wolff. The spotifyr package allows
+the bulk pulling of features tracks from Spotify’s Web API. Since we are
+novices at using new packages, we decided just using the data collected
+by TidyTuesday using spotifyr would be sufficient for our study. We do
+recognize the fact that there is a potential bias to the data we are
+analyzing because we are not aware of the search parameters used by
+TidyTuesday when collecting this data using spotifyr.
+
+In our study we will focus on the danceability, energy, speechiness,
+popularity, length, and loudness of songs. We will primarily group data
+based on the song’s genre.
+
+We need to find a properly cite all of the definitions. (use:
+<https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-21>)
+
+Format of the rest of the paper I am unsure of how to make super
+cohesive, but I could see us going through and doing the scatter plot
+and listing some descriptive statistics followed by the hypothesis test
+for each of the items listed above. We want to be sure everything is
+relevant to what we are studying.
+
+## References:
+
+TidyTuesday:
+<https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-21>
+
+Spotifyr: <https://www.rcharlie.com/spotifyr/>
