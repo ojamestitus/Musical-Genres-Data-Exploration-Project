@@ -185,7 +185,68 @@ This chart shows the relationship that for mode 0 and 1, the key varies. By look
 
 
 
-Explore a potential relationship between energy and danceability,
+## Explore the relationship between popularity and each of the following: danceability, energy, speechiness, length, and loudness. 
+## Danceability
+```{r}
+ggplot(spotify_songs, aes(x=danceability, y=track_popularity)) + 
+    geom_point()+geom_smooth(method=lm)
+
+```
+
+```{r}
+summary(lm(data=spotify_songs, track_popularity~danceability))
+```
+From the scatterplot, there appears to be no significant relationship between danceability and track popularity.Since our r squared value is close to zero,the variation observed in track popularity is not explained by danceability. 
+
+## Energy
+```{r}
+ggplot(spotify_songs, aes(x=energy, y=track_popularity)) + 
+    geom_point()+geom_smooth(method=lm)
+
+```
+
+```{r}
+summary(lm(data=spotify_songs, track_popularity~energy))
+```
+From the scatterplot, there appears to be slightly negative relationship between track popularity and energy but variation in track popularity is not explained by energy as we see r squared value is close to zero.
+
+
+##speechiness
+```{r}
+ggplot(spotify_songs, aes(x=speechiness, y=track_popularity)) + 
+    geom_point()+geom_smooth(method=lm)
+```
+```{r}
+summary(lm(data=spotify_songs, track_popularity~speechiness))
+```
+From the scatterplot, it appears that there is no significant relationship between track popularity and speechiness. As we can see any variation in track popularity cannot be explained by speechiness since r squared is almost close to 0. 
+
+##Length(duration)
+
+```{r}
+ggplot(spotify_songs, aes(x=duration_ms, y=track_popularity)) + 
+    geom_point()+geom_smooth(method=lm)
+
+```
+
+```{r}
+summary(lm(data=spotify_songs, track_popularity~duration_ms))
+```
+This scatterplot shows that there is a negative relationship between duration of song and track popularity but since r squared value is close to zero 
+
+##Loudness
+```{r}
+ggplot(spotify_songs, aes(x=loudness, y=track_popularity)) + 
+    geom_point()+geom_smooth(method=lm)
+```
+
+```{r}
+summary(lm(data=spotify_songs, track_popularity~loudness))
+```
+There appears to be no significant relationship between track popularity and loudness since our r squared value is closer to zero, most of variation is not explained by the loudness which suggests that there might other variables at play.
+
+##Relationship between dancebaility and energy
+ 
 ```{r}
 ggplot(spotify_songs, aes(x=danceability, y=energy)) + 
     geom_hex() + scale_fill_continuous(trans = "log10")
