@@ -1,6 +1,6 @@
 ---
-title: "Stat 850 Project Description"
-author: "Neetu Regmi, Cassie Tangen, Oliver Titus ..."
+title: "Stat 850 Final Project"
+author: "Neetu Regmi, Cassie Tangen, Oliver Titus"
 output: github_document
 ---
 
@@ -19,39 +19,85 @@ knitr::opts_chunk$set(engine.path=list(sas=saspath, saslog=saspath, sashtml=sasp
 library(SASmarkdown)
 ```
 
-## Instructions
 
-Each member of your team should modify this document in some way and push their modifications to the repository in a separate commit. This will ensure that you have set your repository up in a way that ensures all group members are working with the same repository. 
+## Introduction
 
-Note that you must compile your readme (this document) for it to properly display as part of your github repository. 
+There are a wide range of genres and each genre has its own unique traits that sets it apart from the other genres. We plan to investigate what makes rock, R&B, rap, EDM, latin, and pop different based on their length, danceability, energy, and loudness. We will then analyze the popularity of each genre. Based on their popularities we will look to see which factor plays the most important roll, if any does, in the popularity of songs.
 
-Once you have received feedback on your project proposal (via Canvas) you may alter this README so that it describes your final project instead of the project proposal. 
 
-## Data Set
-```{r}
+
+```{r, echo=F, message = F, warning = F}
+# load the data
 spotify_songs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-21/spotify_songs.csv')
 ```
 
+## Data Description
 
-Data from TidyTuesday about songs on Spotify.
-There are many variables included which are all described by TidyTuesday in the 01-21-2020 folder titled song genres.
+The data we are analyzing was obtained from TidyTuesday. The data was obtained by using the spotifyr package created by Charlie Thompson, Josiah Parry, Donal Phipps, and Tom Wolff. The spotifyr package allows the bulk pulling of features tracks from Spotify’s Web API. Since we are novices at using new packages, we decided just using the data collected by TidyTuesday using spotifyr would be sufficient for our study. We do recognize the fact that there is a potential bias to the data we are analyzing because we are not aware of the search parameters used by TidyTuesday when collecting this data using spotifyr.
 
-> You'll want to describe the variables you're interested in and talk a bit about how the data were assembled. You can use the tidytuesday page as a reference, but you'll want to write this out in your own words. 
+In our study we will focus on the danceability, energy, speechiness, popularity, length, and loudness of songs. We will primarily group data based on the song’s genre.
 
-## Potential Topics to Explore Using the Data Set
-Describe avenues you might explore using the data
+>We need to find a properly cite all of the definitions. (use: https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-21)
 
-Cassie:
-Exploring if there is difference in song length based on genre.
-```{r}
+
+## Data Summary
+We will look at the interesting variables mentioned above for each of the genre to attempt to determine a defining characteristic or two about each genre.
+
+Let's first look at a nice stacked boxplot for each of the variables that we are interested in exploring along with a boxplot of the popularity of each genre. These might give us a visual idea of which variables are key characteristics for each genre.
+
+>Need to include box plots for: duration, danceability, energy, loudness, and speechines and popularity. I have duration, loudness and popularity need to add energy and danceability.
+
+### Visual Exploration of Data
+
+
+```{r, warning=F, message=F, echo=F}
 library(tidyverse)
 ggplot(spotify_songs, aes(x=duration_ms, fill=playlist_genre)) + geom_boxplot()
 ```
 
-I decided to use a stacked boxplot to look at and compare the duration of the song duration in milliseconds of each different genre. It appears that rock and R&B have the longest durations and EDM is the shortest.
+```{r, warning=F, message=F, echo=F}
+ggplot(spotify_songs, aes(x=loudness, fill=playlist_genre)) + geom_boxplot()
+```
 
-Create a few data frames that have been filtered for each genre. This will aid in calculations later.
-```{r}
+```{r, warning=F, message=F, echo=F}
+ggplot(spotify_songs, aes(y=danceability, fill=playlist_genre)) + 
+    geom_boxplot()
+```
+
+```{r, warning=F, message=F, echo=F}
+ggplot(spotify_songs, aes(y=energy, fill=playlist_genre)) + 
+    geom_boxplot()
+```
+
+```{r, warning=F, message=F, echo=F}
+ggplot(spotify_songs, aes(y=speechiness, fill=playlist_genre)) + 
+    geom_boxplot()
+```
+
+```{r, warning=F, message=F, echo=F}
+ggplot(spotify_songs, aes(x=track_popularity, fill=playlist_genre)) + geom_boxplot()
+```
+
+It appears that rock and R&B have the longest durations and EDM is the shortest.
+EDM appears to be the loudest with R&B the least loud. Let's look at the means numerically as well.
+It appears that pop and latin on average are more popular and EDM is the least popular.
+
+
+> We will want to make some comments about each of these boxplots before moving on to some nice summary statistics.
+  Also we will want to make sure all of these are either vertical or horizontal.
+
+
+### Summary Statistics
+Let's look closer by looking numerically at our data. I'm also curious about how many songs there are for each genre so I am going to find the number of songs in each genre now as well. The number of tracks could have an impact on the popularity of the genre. Below we have a table that nicely shows summary statistics for our data.
+
+
+> For our summary statistics we should organize everything in one tibble together then I believe Oliver said he can make it look pretty?
+If we could put everything that Oliver has down below for danceability, energy, and speechiness into the same tibble as I (Cassie) have going here that would work towards the cohesiveness of the project.
+
+
+
+```{r, warning=F, message=F, echo=F}
+#creating the data frames that we used later on to make the calculations easier.
 spotify_songs_edm<-filter(spotify_songs, playlist_genre=="edm")
 spotify_songs_latin<-filter(spotify_songs, playlist_genre=="latin")
 spotify_songs_pop<-filter(spotify_songs, playlist_genre=="pop")
@@ -61,8 +107,9 @@ spotify_songs_rock<-filter(spotify_songs, playlist_genre=="rock")
 
 ```
 
-Find out how tracks there are for each genre. This may be useful later.
-```{r}
+
+```{r, warning=F, message=F, echo=F}
+#Find out how many tracks there are for each genre. This may be useful later as we look at each of the characteristics.
 count_edm<-as.double(count(spotify_songs_edm))
 count_latin<-as.double(count(spotify_songs_latin))
 count_pop<-as.double(count(spotify_songs_pop))
@@ -70,14 +117,16 @@ count_rb<-as.double(count(spotify_songs_rb))
 count_rap<-as.double(count(spotify_songs_rap))
 count_rock<-as.double(count(spotify_songs_rock))
 
-
+#It is nice to put things into a list so that we can add them to the tibble later on.
 count<-c(count_edm,count_latin,count_pop,count_rb,count_rap,count_rock)
-
 ```
 > Some of this would be a lot easier if you use group_by! Right now you're doing it by hand!
 
-Let's look closer by looking numerically at the means. I'm also curious about how many songs there are for each genre so I am going to find the number of songs in each genre now as well. I will put the data into a table called genre_table
-```{r}
+
+
+> This tibble that I made here should be made pretty. I think Oliver said he could do that? - C
+
+```{r, warning=F, message=F, echo=F}
 # find mean duration in ms then change to min by /1.667*10^{-5}
 
 mean_duration_edm<-mean(spotify_songs_edm$duration_ms)
@@ -92,21 +141,16 @@ mean_duration<-c(mean_duration_edm/1.667*10^{-5},mean_duration_latin/1.667*10^{-
 genre<-c("EDM","Latin","Pop","R&B","Rap","Rock")
 
 genre_table<-tibble(genre,mean_duration)
-print(genre_table)
+#instead of printing this tibble we will want to have a pretty table with all of the summary statistics together.
+#print(genre_table)
 
 ```
 
 It appears that the genre with the longest songs is rock and the genre with the shortest songs is rap. Would be interesting to perform a hypothesis test to see if there is a statitical difference between the lengths of songs.
 
-
-Explore the popularity of each genre.
-```{r}
-ggplot(spotify_songs, aes(x=track_popularity, fill=playlist_genre)) + geom_boxplot()
-```
-It appears that pop and latin on average are more popular and EDM is the least popular.
 Let's go ahead and calculate mean popularity and add it to the genre table
 
-```{r}
+```{r, warning=F, message=F, echo=F}
 mean_popularity_edm<-mean(spotify_songs_edm$track_popularity)
 mean_popularity_latin<-mean(spotify_songs_latin$track_popularity)
 mean_popularity_pop<-mean(spotify_songs_pop$track_popularity)
@@ -118,17 +162,13 @@ mean_popularity<-c(mean_popularity_edm,mean_popularity_latin,mean_popularity_pop
 
 
 genre_table<-tibble(genre,mean_duration)%>% mutate(mean_popularity)%>%mutate(count)
-print(genre_table)
+#print(genre_table)
 ```
 It appears that EDM is the least popular on average, but it has the most songs so that could be impacting the popularity. I would be interested in performing a hypothesis test to see if EDM's mean popularity is statistically different than that of the others that all appear to be roughly the same popularity-wise.
 
 
-Explore the loudness of different genre.
-```{r}
-ggplot(spotify_songs, aes(x=loudness, fill=playlist_genre)) + geom_boxplot()
-```
-EDM appears to be the loudest with R&B the least loud. Let's look at the means numerically as well.
-```{r}
+
+```{r, warning=F, message=F, echo=F}
 mean_loud_edm<-mean(spotify_songs_edm$loudness)
 mean_loud_latin<-mean(spotify_songs_latin$loudness)
 mean_loud_pop<-mean(spotify_songs_pop$loudness)
@@ -139,13 +179,206 @@ mean_loud_rock<-mean(spotify_songs_rock$loudness)
 mean_loudness<-c(mean_loud_edm,mean_loud_latin,mean_loud_pop,mean_loud_rb,mean_loud_rap,mean_loud_rock)
 
 genre_table<-tibble(genre,mean_duration)%>% mutate(mean_popularity)%>%mutate(mean_loudness)%>%mutate(count)
-print(genre_table)
+#print(genre_table)
 ```
 It seems R&B is the least loud and EDM is the loudest. There is not a huge spread between genre's for loudness, but it does seem that EDM is a decent amount louder than the other varieties. I would be interesting in running a hypothesis test here as well.
 
 
 
-Neetu:
+## Summary statistics for danceability for each genre:
+
+### EDM
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_edm$danceability)
+```
+### Latin
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_latin$danceability)
+```
+
+### Pop
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_pop$danceability)
+```
+
+### R&B
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rb$danceability)
+```
+
+### Rap
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rap$danceability)
+```
+
+### Rock
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rock$danceability)
+```
+
+We see that rap has the highest mean danceability and rock has the lowest mean danceabiltiy according the summary statistics and the box plot.
+
+
+## Summary statistics for energy for each genre:
+
+### EDM
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_edm$energy)
+```
+### Latin
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_latin$energy)
+```
+
+### Pop
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_pop$energy)
+```
+
+### R&B
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rb$energy)
+```
+
+### Rap
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rap$energy)
+```
+
+### Rock
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rock$energy)
+```
+
+EDM appears has the highest mean energy according to the summary statistics and box plot, and R&B has the lowest mean energy.
+
+
+## Summary statistics for speechiness for each genre:
+
+### EDM
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_edm$speechiness)
+```
+### Latin
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_latin$speechiness)
+```
+
+### Pop
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_pop$speechiness)
+```
+
+### R&B
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rb$speechiness)
+```
+
+### Rap
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rap$speechiness)
+```
+
+### Rock
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rock$speechiness)
+```
+
+Every genre seems to have a very similar amount of speechiness, although rap seems to have significantly higher mean speechiness than the other genres.
+
+## Results
+
+
+> It would be nice to run hypothesis tests at this point to determine if there is a difference in the means of the items that we looked at and summarized above. I am not familar with using R for hypothesis testing, but I am willing to figure it out if nobody else knows how to do it.
+
+
+> This section has the relationships between popularity and the characteristics that we were interested in looking at. We should have both scatterplots and some sort of hypothesis test.
+
+
+## Explore the relationship between popularity and each of the following: danceability, energy, speechiness, length, and loudness. 
+## Danceability
+```{r}
+ggplot(spotify_songs, aes(x=danceability, y=track_popularity)) + 
+    geom_point()+geom_smooth(method=lm)
+
+```
+
+```{r}
+summary(lm(data=spotify_songs, track_popularity~danceability))
+```
+From the scatterplot, there appears to be no significant relationship between danceability and track popularity.Since our r squared value is close to zero,the variation observed in track popularity is not explained by danceability. 
+
+## Energy
+```{r}
+ggplot(spotify_songs, aes(x=energy, y=track_popularity)) + 
+    geom_point()+geom_smooth(method=lm)
+
+```
+
+```{r}
+summary(lm(data=spotify_songs, track_popularity~energy))
+```
+From the scatterplot, there appears to be slightly negative relationship between track popularity and energy but variation in track popularity is not explained by energy as we see r squared value is close to zero.
+
+##speechiness
+```{r}
+ggplot(spotify_songs, aes(x=speechiness, y=track_popularity)) + 
+    geom_point()+geom_smooth(method=lm)
+```
+```{r}
+summary(lm(data=spotify_songs, track_popularity~speechiness))
+```
+From the scatterplot, it appears that there is no significant relationship between track popularity and speechiness. As we can see any variation in track popularity cannot be explained by speechiness since r squared is almost close to 0. 
+
+## Length(duration)
+
+```{r}
+ggplot(spotify_songs, aes(x=duration_ms, y=track_popularity)) + 
+    geom_point()+geom_smooth(method=lm)
+
+```
+
+```{r}
+summary(lm(data=spotify_songs, track_popularity~duration_ms))
+```
+This scatterplot shows that there is a negative relationship between duration of song and track popularity but since r squared value is close to zero 
+
+## Loudness
+```{r}
+ggplot(spotify_songs, aes(x=loudness, y=track_popularity)) + 
+    geom_point()+geom_smooth(method=lm)
+```
+
+```{r}
+summary(lm(data=spotify_songs, track_popularity~loudness))
+```
+There appears to be no significant relationship between track popularity and loudness since our r squared value is closer to zero, most of variation is not explained by the loudness which suggests that there might other variables at play.
+
+## Group Members
+Neetu Regmi 
+Oliver Titus 
+Cassie Tangen
+
+## References:
+TidyTuesday: https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-21
+
+Spotifyr: https://www.rcharlie.com/spotifyr/
+
+
+## Code from our rough draft that we may not need for our final paper.
+
 1.Explore the relationship between playlist subgenre and track popularity .
 
 ```{r}
@@ -183,68 +416,6 @@ This chart shows the relationship that for mode 0 and 1, the key varies. By look
 
 > You're plotting this as a numeric variable when neither variable is actually numeric. Please revise and treat this as a categorical variable!
 
-
-
-## Explore the relationship between popularity and each of the following: danceability, energy, speechiness, length, and loudness. 
-## Danceability
-```{r}
-ggplot(spotify_songs, aes(x=danceability, y=track_popularity)) + 
-    geom_point()+geom_smooth(method=lm)
-
-```
-
-```{r}
-summary(lm(data=spotify_songs, track_popularity~danceability))
-```
-From the scatterplot, there appears to be no significant relationship between danceability and track popularity.Since our r squared value is close to zero,the variation observed in track popularity is not explained by danceability. 
-
-## Energy
-```{r}
-ggplot(spotify_songs, aes(x=energy, y=track_popularity)) + 
-    geom_point()+geom_smooth(method=lm)
-
-```
-
-```{r}
-summary(lm(data=spotify_songs, track_popularity~energy))
-```
-From the scatterplot, there appears to be slightly negative relationship between track popularity and energy but variation in track popularity is not explained by energy as we see r squared value is close to zero.
-
-
-##speechiness
-```{r}
-ggplot(spotify_songs, aes(x=speechiness, y=track_popularity)) + 
-    geom_point()+geom_smooth(method=lm)
-```
-```{r}
-summary(lm(data=spotify_songs, track_popularity~speechiness))
-```
-From the scatterplot, it appears that there is no significant relationship between track popularity and speechiness. As we can see any variation in track popularity cannot be explained by speechiness since r squared is almost close to 0. 
-
-##Length(duration)
-
-```{r}
-ggplot(spotify_songs, aes(x=duration_ms, y=track_popularity)) + 
-    geom_point()+geom_smooth(method=lm)
-
-```
-
-```{r}
-summary(lm(data=spotify_songs, track_popularity~duration_ms))
-```
-This scatterplot shows that there is a negative relationship between duration of song and track popularity but since r squared value is close to zero 
-
-##Loudness
-```{r}
-ggplot(spotify_songs, aes(x=loudness, y=track_popularity)) + 
-    geom_point()+geom_smooth(method=lm)
-```
-
-```{r}
-summary(lm(data=spotify_songs, track_popularity~loudness))
-```
-There appears to be no significant relationship between track popularity and loudness since our r squared value is closer to zero, most of variation is not explained by the loudness which suggests that there might other variables at play.
-
 ##Relationship between dancebaility and energy
  
 ```{r}
@@ -254,154 +425,6 @@ ggplot(spotify_songs, aes(x=danceability, y=energy)) +
 This scatterplot shows the relationship between danceability and energy also we can see that highest number of observation falls around when both danceability and energy are above 0.50.This suggests that we can expect that high value of danceability will likely have high value of energy ignoring some outliers.
 Also, I wanted to circle the region that has large number of points cluster together, tried few things to get some sort of outline to focus on that region didn't work, was unsuccessful.
 
-> I've used a binned plot to deal with the overplotting here - you see that there's a big region of points, but no clear linear relationship - just a big point cloud. 
-
-Oliver:
-
-1. Explore the dancibility, energy, key,mode, speechiness, etc based on genre.
-
-Box plot:
-
-```{r}
-ggplot(spotify_songs, aes(y=danceability, fill=playlist_genre)) + 
-    geom_boxplot()
-```
-
-## Summary statistics for danceability for each genre:
-
-### EDM
-```{r}
-summary(spotify_songs_edm$danceability)
-```
-### Latin
-
-```{r}
-summary(spotify_songs_latin$danceability)
-```
-
-### Pop
-
-```{r}
-summary(spotify_songs_pop$danceability)
-```
-
-### R&B
-```{r}
-summary(spotify_songs_rb$danceability)
-```
-
-### Rap
-
-```{r}
-summary(spotify_songs_rap$danceability)
-```
-
-### Rock
-
-```{r}
-summary(spotify_songs_rock$danceability)
-```
-
-We see that rap has the highest mean danceability and rock has the lowest mean danceabiltiy according the summary statistics and the box plot.
-Box plot:
-
-```{r}
-ggplot(spotify_songs, aes(y=energy, fill=playlist_genre)) + 
-    geom_boxplot()
-```
-
-## Summary statistics for energy for each genre:
-
-### EDM
-```{r}
-summary(spotify_songs_edm$energy)
-```
-### Latin
-
-```{r}
-summary(spotify_songs_latin$energy)
-```
-
-### Pop
-
-```{r}
-summary(spotify_songs_pop$energy)
-```
-
-### R&B
-```{r}
-summary(spotify_songs_rb$energy)
-```
-
-### Rap
-
-```{r}
-summary(spotify_songs_rap$energy)
-```
-
-### Rock
-
-```{r}
-summary(spotify_songs_rock$energy)
-```
-
-EDM appears has the highest mean energy according to the summary statistics and box plot, and R&B has the lowest mean energy.
-Box plot:
-
-```{r}
-ggplot(spotify_songs, aes(y=speechiness, fill=playlist_genre)) + 
-    geom_boxplot()
-```
-
-## Summary statistics for speechiness for each genre:
-
-### EDM
-```{r}
-summary(spotify_songs_edm$speechiness)
-```
-### Latin
-
-```{r}
-summary(spotify_songs_latin$speechiness)
-```
-
-### Pop
-
-```{r}
-summary(spotify_songs_pop$speechiness)
-```
-
-### R&B
-```{r}
-summary(spotify_songs_rb$speechiness)
-```
-
-### Rap
-
-```{r}
-summary(spotify_songs_rap$speechiness)
-```
-
-### Rock
-
-```{r}
-summary(spotify_songs_rock$speechiness)
-```
-
-Every genre seems to have a very similar amount of speechiness, although rap seems to have significantly higher mean speechiness than the other genres.
-
-2. Explore the relationship between danceability and loudness.
-
-```{r}
-ggplot(spotify_songs, aes(x=loudness, y=danceability)) + 
-    geom_point() + geom_smooth(method=lm)
-```
-
-```{r}
-summary(lm(data=spotify_songs, danceability~loudness))
-```
-
-Looking at the scatter plot, there appears to be no significant relationship between loudness and danceability because of the coefficient on loudness and the R^2 being almost 0.
 3. Explore the relationship between danceability and tempo.
 
 ```{r}
@@ -415,51 +438,15 @@ summary(lm(data=spotify_songs, danceability~tempo))
 
 According to this regression output, there appears to be a significant negative relationship between danceability and tempo because of the negative and significant coeffiecient on loudness. But, the R^2 is quite small, so most of the variability in danceability is not explained by tempo. This is also apparent in the scatter plot.
 
-## Group Members
-List all of the project contributors here.
-Neetu Regmi 
-Oliver Titus 
-Cassie Tangen
+2. Explore the relationship between danceability and loudness.
 
-## Cassie’s plan to make things cohesive:
+```{r}
+ggplot(spotify_songs, aes(x=loudness, y=danceability)) + 
+    geom_point() + geom_smooth(method=lm)
+```
 
+```{r}
+summary(lm(data=spotify_songs, danceability~loudness))
+```
 
-We should look at the following:
-
-Genre: danceability, energy, speechiness, 
-(Oliver has done) 
-popularity, length, and loudness.
-	(Cassie has done)
-
-Create a scatterplot and perform a test to see if there is a relationship between popularity and each of the following: danceability, energy, speechiness, length, and loudness. 
-(Neetu you have done a scatterplot within your work could you modify that to look at each of these?)
-
-
-
-
-## A rough draft of “paper” portion:
-(this will get intergrated above as we clean things up and oragnize later.)
-
-Introduction:
-
-There are a wide range of genres and each genre has its own unique traits that sets it apart from the other genres.  We plan to investigate what makes rock, R&B, rap, EDM, latin, and pop different based on their length, danceability, energy, and loudness. We will then analyze the popularity of each genre. Based on their popularities we will look to see which factor plays the most important roll, if any does, in the popularity of songs.
-
-
-Data Description:
-
-The data we are analyzing was obtained from TidyTuesday. The data was obtained by using the spotifyr package created by Charlie Thompson, Josiah Parry, Donal Phipps, and Tom Wolff. The spotifyr package allows the bulk pulling of features tracks from Spotify’s Web API. Since we are novices at using new packages, we decided just using the data collected by TidyTuesday using spotifyr would be sufficient for our study. We do recognize the fact that there is a potential bias to the data we are analyzing because we are not aware of the search parameters used by TidyTuesday when collecting this data using spotifyr.
-
-In our study we will focus on the danceability, energy, speechiness, popularity, length, and loudness of songs. We will primarily group data based on the song’s genre.
-
-We need to find a properly cite all of the definitions. (use: https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-21)
-
-
-
-Format of the rest of the paper I am unsure of how to make super cohesive, but I could see us going through and doing the scatter plot and listing some descriptive statistics followed by the hypothesis test for each of the items listed above. We want to be sure everything is relevant to what we are studying.
-
-
-## References:
-TidyTuesday: https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-21
-
-Spotifyr: https://www.rcharlie.com/spotifyr/
-
+Looking at the scatter plot, there appears to be no significant relationship between loudness and danceability because of the coefficient on loudness and the R^2 being almost 0.
