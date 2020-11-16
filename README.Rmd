@@ -140,6 +140,8 @@ summary(popularity_aov)
 
 >Since the Anova tests above all result in rejecting the null hypothesis that all of the groups have equal means we should perform a tukey test to see which is different. 
 
+All of the above overall F-tests reject the null hypothesis that the mean speechiness, energy, danceability, loudness, duration, and popularity are the same. This means that there is a difference with all of these characteristics across each genre. We will investigate the size of these differences using a Tukey test.
+
 ```{r}
 TukeyHSD(speechiness_aov)
 TukeyHSD(energy_aov)
@@ -151,6 +153,7 @@ TukeyHSD(popularity_aov)
 ```
 
 >We will want to talk about the results of both the ANOVA and the Tukey tests.
+
 
 
 > This section has the relationships between popularity and the characteristics that we were interested in looking at. We should have both scatterplots and some sort of hypothesis test.
