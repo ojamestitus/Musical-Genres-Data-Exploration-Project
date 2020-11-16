@@ -98,6 +98,9 @@ If we could put everything that Oliver has down below for danceability, energy, 
 
 ```{r, warning=F, message=F, echo=F}
 #creating the data frames that we used later on to make the calculations easier.
+
+#not sure we actually use this later on at this point, but I'm going to leave it here for now. If we don't need it someone can move it to the bottom until we finalize our project.
+
 spotify_songs_edm<-filter(spotify_songs, playlist_genre=="edm")
 spotify_songs_latin<-filter(spotify_songs, playlist_genre=="latin")
 spotify_songs_pop<-filter(spotify_songs, playlist_genre=="pop")
@@ -107,198 +110,14 @@ spotify_songs_rock<-filter(spotify_songs, playlist_genre=="rock")
 
 ```
 
+>Here is a good option for a summary table with all of the means
+Oliver could you make this look pretty?
 
 ```{r, warning=F, message=F, echo=F}
-#Find out how many tracks there are for each genre. This may be useful later as we look at each of the characteristics.
-count_edm<-as.double(count(spotify_songs_edm))
-count_latin<-as.double(count(spotify_songs_latin))
-count_pop<-as.double(count(spotify_songs_pop))
-count_rb<-as.double(count(spotify_songs_rb))
-count_rap<-as.double(count(spotify_songs_rap))
-count_rock<-as.double(count(spotify_songs_rock))
-
-#It is nice to put things into a list so that we can add them to the tibble later on.
-count<-c(count_edm,count_latin,count_pop,count_rb,count_rap,count_rock)
-```
-> Some of this would be a lot easier if you use group_by! Right now you're doing it by hand!
-
-
-
-> This tibble that I made here should be made pretty. I think Oliver said he could do that? - C
-
-```{r, warning=F, message=F, echo=F}
-# find mean duration in ms then change to min by /1.667*10^{-5}
-
-mean_duration_edm<-mean(spotify_songs_edm$duration_ms)
-mean_duration_latin<-mean(spotify_songs_latin$duration_ms)
-mean_duration_pop<-mean(spotify_songs_pop$duration_ms)
-mean_duration_rb<-mean(spotify_songs_rb$duration_ms)
-mean_duration_rap<-mean(spotify_songs_rap$duration_ms)
-mean_duration_rock<-mean(spotify_songs_rock$duration_ms)
-
-mean_duration<-c(mean_duration_edm/1.667*10^{-5},mean_duration_latin/1.667*10^{-5},mean_duration_pop/1.667*10^{-5},mean_duration_rb/1.667*10^{-5},mean_duration_rap/1.667*10^{-5},mean_duration_rock/1.667*10^{-5})
-
-genre<-c("EDM","Latin","Pop","R&B","Rap","Rock")
-
-genre_table<-tibble(genre,mean_duration)
-#instead of printing this tibble we will want to have a pretty table with all of the summary statistics together.
-#print(genre_table)
-
+summary_table<- group_by(spotify_songs, playlist_genre) %>% summarise(count=n(), mean_loudness=mean(loudness), mean_duration_in_ms=mean(duration_ms), mean_danceability=mean(danceability), mean_speechiness=mean(speechiness), mean_energry=mean(energy), mean_mean_popularity=mean(track_popularity))
+print(summary_table)
 ```
 
-It appears that the genre with the longest songs is rock and the genre with the shortest songs is rap. Would be interesting to perform a hypothesis test to see if there is a statitical difference between the lengths of songs.
-
-Let's go ahead and calculate mean popularity and add it to the genre table
-
-```{r, warning=F, message=F, echo=F}
-mean_popularity_edm<-mean(spotify_songs_edm$track_popularity)
-mean_popularity_latin<-mean(spotify_songs_latin$track_popularity)
-mean_popularity_pop<-mean(spotify_songs_pop$track_popularity)
-mean_popularity_rb<-mean(spotify_songs_rb$track_popularity)
-mean_popularity_rap<-mean(spotify_songs_rap$track_popularity)
-mean_popularity_rock<-mean(spotify_songs_rock$track_popularity)
-
-mean_popularity<-c(mean_popularity_edm,mean_popularity_latin,mean_popularity_pop,mean_popularity_rb,mean_popularity_rap,mean_popularity_rock)
-
-
-genre_table<-tibble(genre,mean_duration)%>% mutate(mean_popularity)%>%mutate(count)
-#print(genre_table)
-```
-It appears that EDM is the least popular on average, but it has the most songs so that could be impacting the popularity. I would be interested in performing a hypothesis test to see if EDM's mean popularity is statistically different than that of the others that all appear to be roughly the same popularity-wise.
-
-
-
-```{r, warning=F, message=F, echo=F}
-mean_loud_edm<-mean(spotify_songs_edm$loudness)
-mean_loud_latin<-mean(spotify_songs_latin$loudness)
-mean_loud_pop<-mean(spotify_songs_pop$loudness)
-mean_loud_rb<-mean(spotify_songs_rb$loudness)
-mean_loud_rap<-mean(spotify_songs_rap$loudness)
-mean_loud_rock<-mean(spotify_songs_rock$loudness)
-
-mean_loudness<-c(mean_loud_edm,mean_loud_latin,mean_loud_pop,mean_loud_rb,mean_loud_rap,mean_loud_rock)
-
-genre_table<-tibble(genre,mean_duration)%>% mutate(mean_popularity)%>%mutate(mean_loudness)%>%mutate(count)
-#print(genre_table)
-```
-It seems R&B is the least loud and EDM is the loudest. There is not a huge spread between genre's for loudness, but it does seem that EDM is a decent amount louder than the other varieties. I would be interesting in running a hypothesis test here as well.
-
-
-
-## Summary statistics for danceability for each genre:
-
-### EDM
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_edm$danceability)
-```
-### Latin
-
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_latin$danceability)
-```
-
-### Pop
-
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_pop$danceability)
-```
-
-### R&B
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_rb$danceability)
-```
-
-### Rap
-
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_rap$danceability)
-```
-
-### Rock
-
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_rock$danceability)
-```
-
-We see that rap has the highest mean danceability and rock has the lowest mean danceabiltiy according the summary statistics and the box plot.
-
-
-## Summary statistics for energy for each genre:
-
-### EDM
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_edm$energy)
-```
-### Latin
-
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_latin$energy)
-```
-
-### Pop
-
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_pop$energy)
-```
-
-### R&B
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_rb$energy)
-```
-
-### Rap
-
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_rap$energy)
-```
-
-### Rock
-
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_rock$energy)
-```
-
-EDM appears has the highest mean energy according to the summary statistics and box plot, and R&B has the lowest mean energy.
-
-
-## Summary statistics for speechiness for each genre:
-
-### EDM
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_edm$speechiness)
-```
-### Latin
-
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_latin$speechiness)
-```
-
-### Pop
-
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_pop$speechiness)
-```
-
-### R&B
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_rb$speechiness)
-```
-
-### Rap
-
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_rap$speechiness)
-```
-
-### Rock
-
-```{r, warning=F, message=F, echo=F}
-summary(spotify_songs_rock$speechiness)
-```
-
-Every genre seems to have a very similar amount of speechiness, although rap seems to have significantly higher mean speechiness than the other genres.
-
-> I'm not sure how to make these all into a single table. Anyone know how? -Oliver
 
 ## Results
 
@@ -306,12 +125,32 @@ Every genre seems to have a very similar amount of speechiness, although rap see
 speechiness_aov <- aov(speechiness ~ playlist_genre, data=spotify_songs)
 energy_aov <- aov(energy ~ playlist_genre, data=spotify_songs)
 danceability_aov <- aov(danceability ~ playlist_genre, data=spotify_songs)
+loudness_aov <- aov(loudness ~ playlist_genre, data=spotify_songs)
+duration_aov <- aov(duration_ms ~ playlist_genre, data=spotify_songs)
+popularity_aov <- aov(track_popularity ~ playlist_genre, data=spotify_songs)
 
 summary(speechiness_aov)
 summary(energy_aov)
 summary(danceability_aov)
+summary(loudness_aov)
+summary(duration_aov)
+summary(popularity_aov)
+
 ```
-> It would be nice to run hypothesis tests at this point to determine if there is a difference in the means of the items that we looked at and summarized above. I am not familar with using R for hypothesis testing, but I am willing to figure it out if nobody else knows how to do it.
+
+>Since the Anova tests above all result in rejecting the null hypothesis that all of the groups have equal means we should perform a tukey test to see which is different. 
+
+```{r}
+TukeyHSD(speechiness_aov)
+TukeyHSD(energy_aov)
+TukeyHSD(danceability_aov)
+TukeyHSD(loudness_aov)
+TukeyHSD(duration_aov)
+TukeyHSD(popularity_aov)
+
+```
+
+>We will want to talk about the results of both the ANOVA and the Tukey tests.
 
 
 > This section has the relationships between popularity and the characteristics that we were interested in looking at. We should have both scatterplots and some sort of hypothesis test.
@@ -460,3 +299,195 @@ summary(lm(data=spotify_songs, danceability~loudness))
 ```
 
 Looking at the scatter plot, there appears to be no significant relationship between loudness and danceability because of the coefficient on loudness and the R^2 being almost 0.
+
+## Summary statistics for danceability for each genre:
+
+### EDM
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_edm$danceability)
+
+```
+### Latin
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_latin$danceability)
+```
+
+### Pop
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_pop$danceability)
+```
+
+### R&B
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rb$danceability)
+```
+
+### Rap
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rap$danceability)
+```
+
+### Rock
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rock$danceability)
+```
+
+We see that rap has the highest mean danceability and rock has the lowest mean danceabiltiy according the summary statistics and the box plot.
+
+
+## Summary statistics for energy for each genre:
+
+### EDM
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_edm$energy)
+```
+### Latin
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_latin$energy)
+```
+
+### Pop
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_pop$energy)
+```
+
+### R&B
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rb$energy)
+```
+
+### Rap
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rap$energy)
+```
+
+### Rock
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rock$energy)
+```
+
+EDM appears has the highest mean energy according to the summary statistics and box plot, and R&B has the lowest mean energy.
+
+
+## Summary statistics for speechiness for each genre:
+
+### EDM
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_edm$speechiness)
+```
+### Latin
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_latin$speechiness)
+```
+
+### Pop
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_pop$speechiness)
+```
+
+### R&B
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rb$speechiness)
+```
+
+### Rap
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rap$speechiness)
+```
+
+### Rock
+
+```{r, warning=F, message=F, echo=F}
+summary(spotify_songs_rock$speechiness)
+```
+
+Every genre seems to have a very similar amount of speechiness, although rap seems to have significantly higher mean speechiness than the other genres.
+
+
+```{r, warning=F, message=F, echo=F}
+#Find out how many tracks there are for each genre. This may be useful later as we look at each of the characteristics.
+count_edm<-as.double(count(spotify_songs_edm))
+count_latin<-as.double(count(spotify_songs_latin))
+count_pop<-as.double(count(spotify_songs_pop))
+count_rb<-as.double(count(spotify_songs_rb))
+count_rap<-as.double(count(spotify_songs_rap))
+count_rock<-as.double(count(spotify_songs_rock))
+
+#It is nice to put things into a list so that we can add them to the tibble later on.
+count<-c(count_edm,count_latin,count_pop,count_rb,count_rap,count_rock)
+```
+
+> Some of this would be a lot easier if you use group_by! Right now you're doing it by hand!
+
+
+
+> This tibble that I made here should be made pretty. I think Oliver said he could do that? - C
+
+```{r, warning=F, message=F, echo=F}
+# find mean duration in ms then change to min by /1.667*10^{-5}
+
+mean_duration_edm<-mean(spotify_songs_edm$duration_ms)
+mean_duration_latin<-mean(spotify_songs_latin$duration_ms)
+mean_duration_pop<-mean(spotify_songs_pop$duration_ms)
+mean_duration_rb<-mean(spotify_songs_rb$duration_ms)
+mean_duration_rap<-mean(spotify_songs_rap$duration_ms)
+mean_duration_rock<-mean(spotify_songs_rock$duration_ms)
+
+mean_duration<-c(mean_duration_edm/1.667*10^{-5},mean_duration_latin/1.667*10^{-5},mean_duration_pop/1.667*10^{-5},mean_duration_rb/1.667*10^{-5},mean_duration_rap/1.667*10^{-5},mean_duration_rock/1.667*10^{-5})
+
+genre<-c("EDM","Latin","Pop","R&B","Rap","Rock")
+
+genre_table<-tibble(genre,mean_duration)
+#instead of printing this tibble we will want to have a pretty table with all of the summary statistics together.
+#print(genre_table)
+
+```
+
+It appears that the genre with the longest songs is rock and the genre with the shortest songs is rap. Would be interesting to perform a hypothesis test to see if there is a statitical difference between the lengths of songs.
+
+Let's go ahead and calculate mean popularity and add it to the genre table
+
+```{r, warning=F, message=F, echo=F}
+mean_popularity_edm<-mean(spotify_songs_edm$track_popularity)
+mean_popularity_latin<-mean(spotify_songs_latin$track_popularity)
+mean_popularity_pop<-mean(spotify_songs_pop$track_popularity)
+mean_popularity_rb<-mean(spotify_songs_rb$track_popularity)
+mean_popularity_rap<-mean(spotify_songs_rap$track_popularity)
+mean_popularity_rock<-mean(spotify_songs_rock$track_popularity)
+
+mean_popularity<-c(mean_popularity_edm,mean_popularity_latin,mean_popularity_pop,mean_popularity_rb,mean_popularity_rap,mean_popularity_rock)
+
+
+genre_table<-tibble(genre,mean_duration)%>% mutate(mean_popularity)%>%mutate(count)
+#print(genre_table)
+```
+It appears that EDM is the least popular on average, but it has the most songs so that could be impacting the popularity. I would be interested in performing a hypothesis test to see if EDM's mean popularity is statistically different than that of the others that all appear to be roughly the same popularity-wise.
+
+
+
+```{r, warning=F, message=F, echo=F}
+mean_loud_edm<-mean(spotify_songs_edm$loudness)
+mean_loud_latin<-mean(spotify_songs_latin$loudness)
+mean_loud_pop<-mean(spotify_songs_pop$loudness)
+mean_loud_rb<-mean(spotify_songs_rb$loudness)
+mean_loud_rap<-mean(spotify_songs_rap$loudness)
+mean_loud_rock<-mean(spotify_songs_rock$loudness)
+
+mean_loudness<-c(mean_loud_edm,mean_loud_latin,mean_loud_pop,mean_loud_rb,mean_loud_rap,mean_loud_rock)
+
+genre_table<-tibble(genre,mean_duration)%>% mutate(mean_popularity)%>%mutate(mean_loudness)%>%mutate(count)
+#print(genre_table)
+```
+It seems R&B is the least loud and EDM is the loudest. There is not a huge spread between genre's for loudness, but it does seem that EDM is a decent amount louder than the other varieties. I would be interesting in running a hypothesis test here as well.
+
