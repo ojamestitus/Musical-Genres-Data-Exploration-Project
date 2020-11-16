@@ -115,7 +115,7 @@ Oliver could you make this look pretty?
 
 ```{r, warning=F, message=F, echo=F}
 summary_table<- group_by(spotify_songs, playlist_genre) %>% summarise(count=n(), mean_loudness=mean(loudness), mean_duration_in_ms=mean(duration_ms), mean_danceability=mean(danceability), mean_speechiness=mean(speechiness), mean_energry=mean(energy), mean_mean_popularity=mean(track_popularity))
-print(summary_table)
+summary_table %>% kable()
 ```
 
 
