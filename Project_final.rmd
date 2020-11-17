@@ -1,0 +1,485 @@
+\documentclass[10pt]{beamer}
+\usepackage{array}
+
+%% Based on the original theme by Matthias Vogelgesang
+
+\usetheme[progressbar=frametitle]{metropolis}
+\usepackage{appendixnumberbeamer}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% UNCC Theme Adjustments %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{CanvasBG}{HTML}{FAFAFA}
+
+% From the official style guide
+\definecolor{UnccGreen}{HTML}{00703C}
+\definecolor{UnccGold}{HTML}{B3A369}
+\definecolor{UnccLightGreen}{HTML}{C3D7A4}
+\definecolor{UnccYellow}{HTML}{F0CB00}
+\definecolor{UnccOrange}{HTML}{F3901D}
+\definecolor{UnccLightYellow}{HTML}{FFF6DC}
+\definecolor{UnccBlue}{HTML}{00728F}
+\definecolor{UnccPink}{HTML}{DE3A6E}
+\definecolor{White}{HTML}{FFFFFF}
+\definecolor{LightGray}{HTML}{DDDDDD}
+
+% Supporting Color Palette
+\definecolor{WarmGray}{HTML}{696158}
+\definecolor{StoneGray}{HTML}{717C7D}
+\definecolor{DarkGreen}{HTML}{2C5234}
+\definecolor{LightGreen}{HTML}{509E2F}
+\definecolor{BrightGold}{HTML}{F0CB00}
+
+% Screamers
+\definecolor{Royal}{HTML}{72246C}
+\definecolor{Ocean}{HTML}{006BA6}
+\definecolor{Flash}{HTML}{B52555}
+\definecolor{Citrus}{HTML}{FFB81C}
+\definecolor{Spring}{HTML}{CEDC00}
+
+% Serenity
+\definecolor{Garden}{HTML}{B7CE95}
+\definecolor{Sand}{HTML}{F0E991}
+\definecolor{Bloom}{HTML}{F1E6B2}
+\definecolor{Clay}{HTML}{B7B09C}
+\definecolor{Cloud}{HTML}{BAC5B9}
+
+% Set colors here
+\setbeamercolor{frametitle}{bg=UnccGreen}
+\setbeamercolor{progress bar}{bg=BrightGold, fg=UnccGreen}
+\setbeamercolor{alerted text}{fg=Flash}
+
+\setbeamercolor{block title}{bg=LightGreen, fg=White}
+\setbeamercolor{block title example}{bg=Ocean, fg=White}
+\setbeamercolor{block title alerted}{bg=Citrus, fg=White}
+\setbeamercolor{block body}{bg=CanvasBG}
+
+\metroset{titleformat=smallcaps, progressbar=foot}
+
+\makeatletter
+\setlength{\metropolis@progressinheadfoot@linewidth}{2pt}
+\setlength{\metropolis@titleseparator@linewidth}{2pt}
+\setlength{\metropolis@progressonsectionpage@linewidth}{2pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% UNCC Theme Adjustments %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\title{Analysis of Spotify data}
+\subtitle{Optional but in case if we want to add}
+\date{}
+\author{Neetu Regmi, Cassie Tangen, Oliver Titus}
+\date{November, 2020}
+\institute{\small\textsf{{University of Nebraska Lincoln}}}
+\titlegraphic{\hfill\includegraphics[height=1.2cm]{logo.pdf}} 
+\maketitle
+
+\begin{document} 
+\begin{frame}{Table of contents}  
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents
+  \end{frame}
+
+\section{Introduction}
+
+\begin{frame}[fragile]{Overview} 
+	\begin{itemize}
+		\item {Each genre has its own unique traits that sets it apart from other genres.}
+		\item {Interested in looking at what makes \textbf{Rock}, \textbf{R\&B}, \textbf{Rap}, \textbf{EDM}, \textbf{latin}, \textbf{Pop} genres different based on the the following attributes:}
+		\begin{itemize}
+		 \item \textbf{\textit{Length}}
+		 \item \textbf{\textit{Danceability}}
+		\item \textbf{\textit{Energy}}
+		\item \textbf{\textit{Loudness}}
+		\end{itemize}
+\item {Interested in analyzing the \textbf{Popularity of each genre} to find out if any variables plays important roll in determining the popularity of song.}
+	\end{itemize}
+\end{frame}
+
+\section{Data Description}
+
+\begin{frame}{Background}
+	\begin{itemize}
+		\item {Spotify Data was created by Charlie Thompson, Josiah Parry, Donal Phipps and Tom Wolff using Spotifyr package.}
+		\item { The Spotifyr package allows the bulk pulling of features tracks from Spotify's Web API.}
+		\item {The data was obtained from tidy tuesday for our study.}
+		\item {We recognize that there might be potential biases in the data depending on the search parameter used by tidytuesday while collecting the data using Spotifyr package.}
+	\end{itemize}
+	\end{frame}
+
+{
+ \metroset{titleformat frame = Information on Variables} 
+\begin{frame}{Information on Variables}
+\begin{center}
+\begin{tabular}{ | m{5em} | m{8cm}|  } 
+\hline
+  \texttt{\textbf{Variables}} & \texttt{\textbf{Descriptions}}\\
+  \hline
+  Genre & Different types of genre in music like Rock, Pop so on.  \\ 
+  \hline
+  Popularity& The popularity of song (0-100), 100 being most popular \\ 
+  \hline
+  Length & Duration of a song measured in milliseconds \\ 
+  \hline
+  Danceability & Describes how suitable the track is for dancing based on beats strength, rhythm, overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable. \\ 
+  \hline
+\end{tabular}
+\end{center}
+\end{frame}
+}
+
+{
+\metroset{titleformat frame=Continued}
+\begin{frame}{Continued}
+\begin{center}
+\begin{tabular}{ | m{5em} | m{8cm}|  } 
+  \hline
+  Energy & Describes energy based on perceptual measure of intensity like dynamic range, perceived loudness, timbre. It is measured from 0.0 to 1.0. \\ 
+  \hline
+   Loudness & Describes the quality of sound relating to amplitude measured in decibles(dB). Values range from -60 to 0 db. \\ 
+  \hline
+  Speechiness & Describes the presence of spoken words in track.The value above 0.66 describe tracks that are probably made entirely of spoken words.Values between 0.33 and 0.66 describe tracks that may contain both music and speech,Values below 0.33 most likely represent music and other non-speech tracks.   \\ 
+  \hline
+ \end{tabular}
+\end{center}
+\end{frame}
+}
+
+\section{Data Summary}
+
+\begin{frame}[fragile]{Specifics}
+
+\end{frame}
+
+\begin{frame}{Font feature test}
+  \begin{itemize}
+    \item Regular
+    \item \textit{Italic}
+    \item \textsc{SmallCaps}
+    \item \textbf{Bold}
+    \item \textbf{\textit{Bold Italic}}
+    \item \textbf{\textsc{Bold SmallCaps}}
+    \item \texttt{Monospace}
+    \item \texttt{\textit{Monospace Italic}}
+    \item \texttt{\textbf{Monospace Bold}}
+    \item \texttt{\textbf{\textit{Monospace Bold Italic}}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Lists}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.33\textwidth}
+      Items
+      \begin{itemize}
+        \item Milk \item Eggs \item Potatos
+      \end{itemize}
+
+    \column{0.33\textwidth}
+      Enumerations
+      \begin{enumerate}
+        \item First, \item Second and \item Last.
+      \end{enumerate}
+
+    \column{0.33\textwidth}
+      Descriptions
+      \begin{description}
+        \item[PowerPoint] Meeh. \item[Beamer] Yeeeha.
+      \end{description}
+  \end{columns}
+\end{frame}
+\begin{frame}{Animation}
+  \begin{itemize}[<+- | alert@+>]
+    \item \alert<4>{This is\only<4>{ really} important}
+    \item Now this
+    \item And now this
+  \end{itemize}
+\end{frame}
+\begin{frame}{Figures}
+  \begin{figure}
+    \newcounter{density}
+    \setcounter{density}{20}
+    \begin{tikzpicture}
+      \def\couleur{alerted text.fg}
+      \path[coordinate] (0,0)  coordinate(A)
+                  ++( 90:5cm) coordinate(B)
+                  ++(0:5cm) coordinate(C)
+                  ++(-90:5cm) coordinate(D);
+      \draw[fill=\couleur!\thedensity] (A) -- (B) -- (C) --(D) -- cycle;
+      \foreach \x in {1,...,40}{%
+          \pgfmathsetcounter{density}{\thedensity+20}
+          \setcounter{density}{\thedensity}
+          \path[coordinate] coordinate(X) at (A){};
+          \path[coordinate] (A) -- (B) coordinate[pos=.10](A)
+                              -- (C) coordinate[pos=.10](B)
+                              -- (D) coordinate[pos=.10](C)
+                              -- (X) coordinate[pos=.10](D);
+          \draw[fill=\couleur!\thedensity] (A)--(B)--(C)-- (D) -- cycle;
+      }
+    \end{tikzpicture}
+    \caption{Rotated square from
+    \href{http://www.texample.net/tikz/examples/rotated-polygons/}{texample.net}.}
+  \end{figure}
+\end{frame}
+\begin{frame}{Tables}
+  \begin{table}
+    \caption{Largest cities in the world (source: Wikipedia)}
+    \begin{tabular}{lr}
+      \toprule
+      City & Population\\
+      \midrule
+      Mexico City & 20,116,842\\
+      Shanghai & 19,210,000\\
+      Peking & 15,796,450\\
+      Istanbul & 14,160,467\\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+\begin{frame}{Blocks}
+  Three different block environments are pre-defined and may be styled with an
+  optional background color.
+
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+      \begin{block}{Default}
+        Block content.
+      \end{block}
+
+      \begin{alertblock}{Alert}
+        Block content.
+      \end{alertblock}
+
+      \begin{exampleblock}{Example}
+        Block content.
+      \end{exampleblock}
+
+    \column{0.5\textwidth}
+
+      \metroset{block=fill}
+
+      \begin{block}{Default}
+        Block content.
+      \end{block}
+
+      \begin{alertblock}{Alert}
+        Block content.
+      \end{alertblock}
+
+      \begin{exampleblock}{Example}
+        Block content.
+      \end{exampleblock}
+
+  \end{columns}
+\end{frame}
+\begin{frame}{Math}
+  \begin{equation*}
+    e = \lim_{n\to \infty} \left(1 + \frac{1}{n}\right)^n
+  \end{equation*}
+\end{frame}
+\begin{frame}{Line plots}
+  \begin{figure}
+    \begin{tikzpicture}
+      \begin{axis}[
+        mlineplot,
+        width=0.9\textwidth,
+        height=6cm,
+      ]
+
+        \addplot {sin(deg(x))};
+        \addplot+[samples=100] {sin(deg(2*x))};
+
+      \end{axis}
+    \end{tikzpicture}
+  \end{figure}
+\end{frame}
+\begin{frame}{Bar charts}
+  \begin{figure}
+    \begin{tikzpicture}
+      \begin{axis}[
+        mbarplot,
+        xlabel={Foo},
+        ylabel={Bar},
+        width=0.9\textwidth,
+        height=6cm,
+      ]
+
+      \addplot plot coordinates {(1, 20) (2, 25) (3, 22.4) (4, 12.4)};
+      \addplot plot coordinates {(1, 18) (2, 24) (3, 23.5) (4, 13.2)};
+      \addplot plot coordinates {(1, 10) (2, 19) (3, 25) (4, 15.2)};
+
+      \legend{lorem, ipsum, dolor}
+
+      \end{axis}
+    \end{tikzpicture}
+  \end{figure}
+\end{frame}
+\begin{frame}{Quotes}
+  \begin{quote}
+    Veni, Vidi, Vici
+  \end{quote}
+\end{frame}
+
+{%
+\setbeamertemplate{frame footer}{My custom footer}
+\begin{frame}[fragile]{Frame footer}
+    \themename defines a custom beamer template to add a text to the footer. It can be set via
+    \begin{verbatim}\setbeamertemplate{frame footer}{My custom footer}\end{verbatim}
+\end{frame}
+}
+
+\begin{frame}{References}
+  Some references to showcase [allowframebreaks] \cite{knuth92,ConcreteMath,Simpson,Er01,greenwade93}
+\end{frame}
+
+\section{Visual exploration of Data}
+
+\begin{frame}{Summary}
+
+  Get the source of this theme and the demo presentation from
+
+  \begin{center}\url{github.com/matze/mtheme}\end{center}
+
+  The theme \emph{itself} is licensed under a
+  \href{http://creativecommons.org/licenses/by-sa/4.0/}{Creative Commons
+  Attribution-ShareAlike 4.0 International License}.
+
+  \begin{center}\ccbysa\end{center}
+
+\end{frame}
+
+{\setbeamercolor{palette primary}{fg=black, bg=yellow}
+\begin{frame}[standout]
+  Questions?
+\end{frame}
+}
+
+\section{Summary Statistics}
+\begin{frame}{needs to be added}
+
+\end{frame}
+
+\section{Results}
+\begin{frame}{needs to be added}
+
+\end{frame}
+
+\section{Conclusion}
+\begin{frame}{needs to be added}
+
+\end{frame}
+
+\appendix
+
+\begin{frame}[fragile]{Backup slides}
+  Sometimes, it is useful to add slides at the end of your presentation to
+  refer to during audience questions.
+
+  The best way to do this is to include the \verb|appendixnumberbeamer|
+  package in your preamble and call \verb|\appendix| before your backup slides.
+
+  \themename will automatically turn off slide numbering and progress bars for
+  slides in the appendix.
+\end{frame}
+
+\begin{frame}[allowframebreaks]{References}
+
+  \bibliography{demo}
+  \bibliographystyle{abbrv}
+
+\end{frame}
+
+\end{document}
+\documentclass{beamer}
+
+% \usepackage{beamerthemesplit} // Activate for custom appearance
+
+\title{Example Presentation Created with the Beamer Package}
+\author{Till Tantau}
+\date{\today}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\frame{\titlepage}
+
+\section[Outline]{}
+\frame{\tableofcontents}
+
+\section{Introduction}
+\subsection{Overview of the Beamer Class}
+\frame
+{
+  \frametitle{Features of the Beamer Class}
+
+  \begin{itemize}
+  \item<1-> Normal LaTeX class.
+  \item<2-> Easy overlays.
+  \item<3-> No external programs needed.      
+  \end{itemize}
+}
+\end{document}
+\documentclass{beamer}
+
+% \usepackage{beamerthemesplit} // Activate for custom appearance
+
+\title{Example Presentation Created with the Beamer Package}
+\author{Till Tantau}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section[Outline]{}
+\frame{\tableofcontents}
+
+\section{Introduction}
+\subsection{Overview of the Beamer Class}
+\frame
+{
+  \frametitle{Features of the Beamer Class}
+
+  \begin{itemize}
+  \item<1-> Normal LaTeX class.
+  \item<2-> Easy overlays.
+  \item<3-> No external programs needed.      
+  \end{itemize}
+}
+\end{document}
+\documentclass{beamer}
+
+% \usepackage{beamerthemesplit} // Activate for custom appearance
+
+\title{Example Presentation Created with the Beamer Package}
+\author{Till Tantau}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section[Outline]{}
+\frame{\tableofcontents}
+
+\section{Introduction}
+\subsection{Overview of the Beamer Class}
+\frame
+{
+  \frametitle{Features of the Beamer Class}
+
+  \begin{itemize}
+  \item<1-> Normal LaTeX class.
+  \item<2-> Easy overlays.
+  \item<3-> No external programs needed.      
+  \end{itemize}
+}
+\end{document}
