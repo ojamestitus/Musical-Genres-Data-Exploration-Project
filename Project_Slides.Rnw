@@ -1,0 +1,185 @@
+\documentclass[10pt]{beamer}
+\usepackage{array}
+
+\usetheme[progressbar=frametitle]{metropolis}
+\usepackage{appendixnumberbeamer}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\definecolor{CanvasBG}{HTML}{FAFAFA}
+
+% From the official style guide
+\definecolor{UnccGreen}{HTML}{00703C}
+\definecolor{UnccGold}{HTML}{B3A369}
+\definecolor{UnccLightGreen}{HTML}{C3D7A4}
+\definecolor{UnccYellow}{HTML}{F0CB00}
+\definecolor{UnccOrange}{HTML}{F3901D}
+\definecolor{UnccLightYellow}{HTML}{FFF6DC}
+\definecolor{UnccBlue}{HTML}{00728F}
+\definecolor{UnccPink}{HTML}{DE3A6E}
+\definecolor{White}{HTML}{FFFFFF}
+\definecolor{LightGray}{HTML}{DDDDDD}
+
+% Supporting Color Palette
+\definecolor{WarmGray}{HTML}{696158}
+\definecolor{StoneGray}{HTML}{717C7D}
+\definecolor{DarkGreen}{HTML}{2C5234}
+\definecolor{LightGreen}{HTML}{509E2F}
+\definecolor{BrightGold}{HTML}{F0CB00}
+
+% Screamers
+\definecolor{Royal}{HTML}{72246C}
+\definecolor{Ocean}{HTML}{006BA6}
+\definecolor{Flash}{HTML}{B52555}
+\definecolor{Citrus}{HTML}{FFB81C}
+\definecolor{Spring}{HTML}{CEDC00}
+
+% Serenity
+\definecolor{Garden}{HTML}{B7CE95}
+\definecolor{Sand}{HTML}{F0E991}
+\definecolor{Bloom}{HTML}{F1E6B2}
+\definecolor{Clay}{HTML}{B7B09C}
+\definecolor{Cloud}{HTML}{BAC5B9}
+
+% Set colors here
+\setbeamercolor{frametitle}{bg=UnccGreen}
+\setbeamercolor{progress bar}{bg=BrightGold, fg=UnccGreen}
+\setbeamercolor{alerted text}{fg=Flash}
+
+\setbeamercolor{block title}{bg=LightGreen, fg=White}
+\setbeamercolor{block title example}{bg=Ocean, fg=White}
+\setbeamercolor{block title alerted}{bg=Citrus, fg=White}
+\setbeamercolor{block body}{bg=CanvasBG}
+
+\metroset{titleformat=smallcaps, progressbar=foot}
+
+\makeatletter
+\setlength{\metropolis@progressinheadfoot@linewidth}{2pt}
+\setlength{\metropolis@titleseparator@linewidth}{2pt}
+\setlength{\metropolis@progressonsectionpage@linewidth}{2pt}
+
+
+\title{Analysis of Spotify data}
+\subtitle{Optional but in case if we want to add}
+\date{}
+\author{Neetu Regmi, Cassie Tangen, Oliver Titus}
+\date{November, 2020}
+\institute{\small\textsf{{University of Nebraska Lincoln}}}
+\titlegraphic{\hfill\includegraphics[height=1.2cm]{logo.pdf}} 
+\maketitle
+
+\begin{document} 
+\SweaveOpts{concordance=TRUE}
+\begin{frame}{Table of contents}  
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents
+  \end{frame}
+
+\section{Introduction}
+
+\begin{frame}[fragile]{Overview} 
+	\begin{itemize}
+		\item {Each genre has its own unique traits that sets it apart from other genres.}
+		\item {Interested in looking at what makes \textbf{Rock}, \textbf{R\&B}, \textbf{Rap}, \textbf{EDM}, \textbf{latin}, \textbf{Pop} genres different based on the the following attributes:}
+		\begin{itemize}
+		 \item \textbf{\textit{Length}}
+		 \item \textbf{\textit{Danceability}}
+		\item \textbf{\textit{Energy}}
+		\item \textbf{\textit{Loudness}}
+		\end{itemize}
+\item {Interested in analyzing the \textbf{Popularity of each genre} to find out if any variables plays important roll in determining the popularity of song.}
+	\end{itemize}
+\end{frame}
+
+\section{Data Description}
+
+\begin{frame}{Background}
+	\begin{itemize}
+		\item {Spotify Data was created by Charlie Thompson, Josiah Parry, Donal Phipps and Tom Wolff using Spotifyr package.}
+		\item { The Spotifyr package allows the bulk pulling of features tracks from Spotify's Web API.}
+		\item {The data was obtained from tidy tuesday for our study.}
+		\item {We recognize that there might be potential biases in the data depending on the search parameter used by tidytuesday while collecting the data using Spotifyr package.}
+	\end{itemize}
+	\end{frame}
+
+{
+ \metroset{titleformat frame = Information on Variables} 
+\begin{frame}{Information on Variables}
+\begin{center}
+\begin{tabular}{ | m{5em} | m{8cm}|  } 
+\hline
+  \texttt{\textbf{Variables}} & \texttt{\textbf{Descriptions}}\\
+  \hline
+  Genre & Different types of genre in music like Rock, Pop so on.  \\ 
+  \hline
+  Popularity& The popularity of song (0-100), 100 being most popular \\ 
+  \hline
+  Length & Duration of a song measured in milliseconds \\ 
+  \hline
+  Danceability & Describes how suitable the track is for dancing based on beats strength, rhythm, overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable. \\ 
+  \hline
+\end{tabular}
+\end{center}
+\end{frame}
+}
+
+{
+\metroset{titleformat frame=Continued}
+\begin{frame}{Continued}
+\begin{center}
+\begin{tabular}{ | m{5em} | m{8cm}|  } 
+  \hline
+  Energy & Describes energy based on perceptual measure of intensity like dynamic range, perceived loudness, timbre. It is measured from 0.0 to 1.0. \\ 
+  \hline
+   Loudness & Describes the quality of sound relating to amplitude measured in decibles(dB). Values range from -60 to 0 db. \\ 
+  \hline
+  Speechiness & Describes the presence of spoken words in track.The value above 0.66 describe tracks that are probably made entirely of spoken words.Values between 0.33 and 0.66 describe tracks that may contain both music and speech,Values below 0.33 most likely represent music and other non-speech tracks.   \\ 
+  \hline
+ \end{tabular}
+\end{center}
+\end{frame}
+}
+
+\section{Data Summary}
+\begin{frame}[fragile]{Specifics}
+table graph would be here
+\end{frame}
+
+\section{Visual exploration of Data}
+\begin{frame}{Grahical View}
+graphs
+\end{frame}
+
+\section{Summary Statistics}
+\begin{frame}{needs to be added}
+tables with results
+\end{frame}
+
+\section{Results}
+\begin{frame}{needs to be added}
+output table
+\end{frame}
+
+\section{Conclusion}
+\begin{frame}{needs to be added}
+Final thought after data exploration
+\end{frame}
+
+\begin{frame}[allowframebreaks]{References}
+\bibliography{demo}
+  references from data
+  \bibliographystyle{abbrv}
+\end{frame}
+
+\end{document}
+
+
+
+
