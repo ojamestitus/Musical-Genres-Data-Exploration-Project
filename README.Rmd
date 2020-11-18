@@ -1,5 +1,5 @@
 ---
-title: "Stat 850 Final Project"
+title: "STAT 850 Final Project"
 author: "Neetu Regmi, Cassie Tangen, Oliver Titus"
 output: github_document
 ---
@@ -22,9 +22,9 @@ library(SASmarkdown)
 
 ## Introduction
 
-There are a wide range of genres and each genre has its own unique traits that sets it apart from the other genres. We plan to investigate what makes rock, R&B, rap, EDM, latin, and pop different based on their length, danceability, energy, and loudness. We will then analyze the popularity of each genre. Based on their popularities we will look to see which factor plays the most important roll, if any does, in the popularity of songs.
+Music plays a role in everyone’s life regardless of age, race, gender, social class or any other defining characteristic. With the expansion of the world wide web numerous online music streaming platforms have become a popular source of listening to music. One such platform is Spotify. Spotify first launched in 2008 and has grown to offer more than 60 million songs. Spotify contains songs from a variety of genres and keeps track of the popularity of each track along with various other characteristics of each track. As a group we were interested in studying these characteristics to determine if there are unique characteristics that make each genre unique, or if some of the characteristics are shared across the genres. (Spotify, 2020)
 
-
+We were able to find a nice set of data from TidyTuesday. The data was shared in the Jan 21, 2020 TidyTuesday folder. The data was originally obtained by making use of the spotifyr package.(Mock, 2020) The spotifyr package was created by Charlie Thompson, Josiah Parry, Donal Phipps, and Tom Wolff. The spotifyr package allows the bulk pulling of features tracks from Spotify’s Web API. Since we are novices at using new packages, we decided just using the data collected by TidyTuesday using spotifyr would be sufficient for our study. We do recognize the fact that there is a potential bias to the data we are analyzing because we are not aware of the search parameters used by TidyTuesday when collecting this data using spotifyr.(R Wrapper for the 'Spotify' Web API, n.d.)
 
 ```{r, echo=F, message = F, warning = F}
 # load the data
@@ -33,17 +33,14 @@ spotify_songs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascie
 
 ## Data Description
 
-The data we are analyzing was obtained from TidyTuesday. The data was obtained by using the spotifyr package created by Charlie Thompson, Josiah Parry, Donal Phipps, and Tom Wolff. The spotifyr package allows the bulk pulling of features tracks from Spotify’s Web API. Since we are novices at using new packages, we decided just using the data collected by TidyTuesday using spotifyr would be sufficient for our study. We do recognize the fact that there is a potential bias to the data we are analyzing because we are not aware of the search parameters used by TidyTuesday when collecting this data using spotifyr.
+The genres that data was collected on include rock, R&B, rap, EDM, Latin, and pop. Each of these genre’s likely illicit thoughts about certain characteristics. For example, rock and EDM I then to think of loud, whereas R&B I tend to think is softer. Rap is often thought to be almost spoken whereas Latin is much more musical with the vocals. Latin or pop are often thought as a genre for dancing and rock is not a genre many people dance to. Thinking about how each of these genres are so vastly different we are going to look at 5 characteristics that we feel would be different across the genres. 
 
-In our study we will focus on the danceability, energy, speechiness, popularity, length, and loudness of songs. We will primarily group data based on the song’s genre.
+The characteristics that we determined would be best to study were the duration, loudness, speechiness, energy, and danceability. We will look at each of these along with popularity, first to determine if there is a unique characteristic for each genre and then if there is a relationship between each of these characteristics and their overall popularity. We also look at the popularity of each genre to help us determine if a particular characteristic about the music tends to make the song more popular.
 
->We need to find a properly cite all of the definitions. (use: https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-21)
-
+We should begin with an explanation of our variables. Duration is the measure of the length of the song and is reported in milliseconds. Danceability is a value between 0.0 and 1.0 where 0.0 is the least danceable and 1.0 is the most danceable. The danceability is determined by an algorithm that looks at the beat strength, tempo, rhythm stability, and overall regularity. Energy is a value between 0.0 and 1.0 that represents the intensity and activity. Energetic tracks are often fast and noisy. The loudness is measured in decibels (dB) and is the average of the decibels across the entire track. Values will typically range between -60 and 0 dB. Speechiness is the measure of the spoken word present in a song. The closer the value is to 1 the more speech-like the track. Songs above 0.66 are likely entirely spoken words. (Mock, 2020)
 
 ## Data Summary
-We will look at the interesting variables mentioned above for each of the genre to attempt to determine a defining characteristic or two about each genre.
-
-Let's first look at a nice stacked boxplot for each of the variables that we are interested in exploring along with a boxplot of the popularity of each genre. These might give us a visual idea of which variables are key characteristics for each genre.
+We will look at the interesting variables mentioned above for each of the genre to attempt to determine a defining characteristic or two about each genre. Let's first look at a nice stacked boxplot for each of the variables that we are interested in exploring along with a boxplot of the popularity of each genre. These might give us a visual idea of which variables are key characteristics for each genre.
 
 ### Visual Exploration of Data
 
@@ -56,38 +53,47 @@ library(moderndive)
 ggplot(spotify_songs, aes(y=duration_ms, fill=playlist_genre)) + geom_boxplot() + ggtitle("Duration for each Genre") + ylab("Milliseconds (ms)") + scale_fill_discrete(name = "Genre", labels = c("EDM", "Latin", "Pop", "R&B", "Rap", "Rock"))
 ```
 
+As we inspect the boxplot of duration for each genre we see that the duration of the tracks we see that Rock and R&B have the longest tracks. EDM seems to have the shortest duration. It is important though to note that the differences between the genres is pretty small so there is likely very little difference statistically.
+
+
 ```{r, warning=F, message=F, echo=F}
 ggplot(spotify_songs, aes(y=loudness, fill=playlist_genre)) + geom_boxplot() + ggtitle("Loudness for each Genre") + ylab("Decibals (dB)") + scale_fill_discrete(name = "Genre", labels = c("EDM", "Latin", "Pop", "R&B", "Rap", "Rock"))
 ```
 
+When inspecting the average loudness of tracks for each genre we discover a bit more variation than we saw with the duration. We note here that EDM appears to be the loudest with R&B the least loud. It is interesting here to see that Latin has what appears to be a few outliers that are much quieter than the rest of the Latin tracks.
+
+
 ```{r, warning=F, message=F, echo=F}
 ggplot(spotify_songs, aes(y=danceability, fill=playlist_genre)) + ggtitle("Danceability for each Genre") + geom_boxplot() + ylab("Danceability") + scale_fill_discrete(name = "Genre", labels = c("EDM", "Latin", "Pop", "R&B", "Rap", "Rock"))
 ```
+
+After a quick look at the boxplot for the danceability of each genre it is clear that rock is the least danceable. Latin is fairly danceable and surprisingly so is rap.
 
 ```{r, warning=F, message=F, echo=F}
 ggplot(spotify_songs, aes(y=energy, fill=playlist_genre)) + 
     geom_boxplot() + ggtitle("Energy for each Genre") + ylab("Energy") + scale_fill_discrete(name = "Genre", labels = c("EDM", "Latin", "Pop", "R&B", "Rap", "Rock"))
 ```
 
+The boxplot for each of each genre doesn't show us anything too surprising. It would be expected that EDM would be high energy and R&B would be low energy. Also not surprising rock appears to be a bit higher in energy than all but EDM.
+
 ```{r, warning=F, message=F, echo=F}
 ggplot(spotify_songs, aes(y=speechiness, fill=playlist_genre)) + 
     geom_boxplot() + ggtitle("Speechiness for each Genre") + ylab("Speechiness") + scale_fill_discrete(name = "Genre", labels = c("EDM", "Latin", "Pop", "R&B", "Rap", "Rock"))
 ```
 
+When it comes to thinking about speechiness one would of course guess that rap would be the speechiest. The boxplot clearly depicts and significant difference in the speechiness between the genres with rap having a much higher speechiness rating than the other genres.
+
 ```{r, warning=F, message=F, echo=F}
 ggplot(spotify_songs, aes(y=track_popularity, fill=playlist_genre)) + geom_boxplot() + ggtitle("Popularity for each Genre") + ylab("Track Popularity") + scale_fill_discrete(name = "Genre", labels = c("EDM", "Latin", "Pop", "R&B", "Rap", "Rock"))
 ```
 
-It appears that rock and R&B have the longest durations and EDM is the shortest.
-EDM appears to be the loudest with R&B the least loud. Let's look at the means numerically as well.
-It appears that pop and latin on average are more popular and EDM is the least popular.
+As we conclude our graphical comparisons we wanted to take a look at the popularity of tracks based on genre. It is pretty clear from the boxplot that EDM is the least popular with pop being the most popular genre. Now that we have taken a look at the these boxplots we can would guess that there would be a statistical difference in the average danceability, energy, and speechiness based on genres. While we expect that the duration and loudness of each genre would statistically be roughly the same even though we can pick out a few that appear to be on the upper or lower end of the spectrum it is not a huge difference.
 
-
-> We will want to make some comments about each of these boxplots before moving on to some nice summary statistics.
 
 ### Summary Statistics
-Let's look closer by looking numerically at our data. I'm also curious about how many songs there are for each genre so I am going to find the number of songs in each genre now as well. The number of tracks could have an impact on the popularity of the genre. Below we have a table that nicely shows summary statistics for our data.
+Before we test to see if there is a statistical difference or not with each of these characteristics we would like to take a look at the means. The boxplots summarize the data by using the five number summary which showcases the minimum, first quartile, median, third quartile, and maximum of our data. These values are more likely to be skewed by outliers as compared to the mean. Below we have a couple tables that display the mean of each genre for the characteristics we are studying.
 
+>Can we split the table into two tables with one having the count, loudness, and duration and the other having the danceability, energy, and speechiness. I think splitting like this would be good so that we don't have to scroll when looking at the paper and it groups the data by characteristics that appear to have more of a difference between the genres.
 
 
 ```{r, warning=F, message=F, echo=F}
@@ -159,12 +165,14 @@ tidy(popularity_aov) %>% kable
 ```
 
 
-All of the above overall F-tests reject the null hypothesis that the mean speechiness, energy, danceability, loudness, duration, and popularity are the same. This means that there is a difference with all of these characteristics across each genre. We will investigate the size of these differences using a Tukey test.
+Interestingly even though we guessed that there may not be a statistical difference with the duration and the loudness of tracks  between the genres we found in all of the overall F-tests shown above that we should reject the null hypothesis that the mean speechiness, energy, danceability, loudness, duration, and popularity are the same. This means that there is a difference with all of these characteristics across each genre. We will investigate these differences using a Tukey test to determine which genres are different that the others.
 
 ### Tukey Test for Speechiness
 ```{r}
 tidy(TukeyHSD(speechiness_aov)) %>% kable()
 ```
+
+When we conduct the Tukey test we can see that there is a significant difference in the speechiness of each genre. This was not a very surprising result though as we figured that at least rap was significantly different that each of the other genres.
 
 ### Tukey Test for Energy
 
@@ -172,11 +180,15 @@ tidy(TukeyHSD(speechiness_aov)) %>% kable()
 tidy(TukeyHSD(energy_aov)) %>% kable()
 ```
 
+When comparing the genres to each other for energy using the Tukey test we found that there is a signficant difference between each of the genres expect for pop and latin. It was found that statistically there is not a difference between the amount of energy in the tracks that are of the genres pop and latin.
+
 ### Tukey Test for Danceability
 
 ```{r}
 tidy(TukeyHSD(danceability_aov)) %>% kable()
 ```
+
+The Tukey test when looking at danceability found that rap and latin have a similar danceability level while all of the other genres are statistically different. 
 
 ### Tukey Test for Loudness
 
@@ -184,11 +196,15 @@ tidy(TukeyHSD(danceability_aov)) %>% kable()
 tidy(TukeyHSD(loudness_aov)) %>% kable()
 ```
 
+When looking at the loudness of genres using the tukey test we see that pop and latin are extremely similar, but the other genres are all different for the level of loudness.
+
 ### Tukey Test for Duration
 
 ```{r}
 tidy(TukeyHSD(duration_aov)) %>% kable()
 ```
+
+When analyzing the duration of track across the genres we found from the Tukey test that pop, latin, and rap have similar durations to each other, but the other genres are all different.
 
 ### Tukey Test for Popularity
 
@@ -196,8 +212,7 @@ tidy(TukeyHSD(duration_aov)) %>% kable()
 tidy(TukeyHSD(popularity_aov)) %>% kable()
 ```
 
->We will want to talk about the results of both the ANOVA and the Tukey tests.
-
+When looking at popularity rock and R&B have very similar popularity rankings as do pop and latin. Rock and rap are also similiar, but it is not as strong of a similarity.
 
 ## Explore the relationship between popularity and each of the following: danceability, energy, speechiness, length, and loudness. 
 ## Danceability
@@ -278,12 +293,21 @@ get_regression_summaries(loudness_model) %>% kable()
 ```
 There appears to be no significant relationship between track popularity and loudness since our r squared value is closer to zero, most of variation is not explained by the loudness which suggests that there might other variables at play.
 
+## Conclusions
+
+From our study we feel that we can say that there is no clear relationship between the 5 characteristics that we studied and the popularity of the track. It was interesting though to note the unique characteristics that made each genre have it's own appeal. Ultimately it is not terribly surprising that there is no one characteristic that will make a song more poplular. With the wide range of people who listen to music there should be a wide range of traits that are desireable and will result in a popular song.
+
+If we had time to further our study we would like to...
+>need to write a nice conclusion.
+
 ## Group Members
 Neetu Regmi 
 Oliver Titus 
 Cassie Tangen
 
 ## References:
-TidyTuesday: https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-21
+(n.d.). Retrieved from R Wrapper for the 'Spotify' Web API: https://www.rcharlie.com/spotifyr/
+Mock, T. (2020, January 21). Retrieved from TidyTuesday: https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-21)
+Spotify. (2020, November 10). Retrieved from Wikipedia: https://en.wikipedia.org/wiki/Spotify
 
-Spotifyr: https://www.rcharlie.com/spotifyr/
+
