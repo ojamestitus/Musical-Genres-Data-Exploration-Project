@@ -89,9 +89,24 @@ ggplot(spotify_songs, aes(y=track_popularity, fill=playlist_genre)) + geom_boxpl
 
 As we conclude our graphical comparisons we wanted to take a look at the popularity of tracks based on genre. It is pretty clear from the boxplot that EDM is the least popular with pop being the most popular genre. Now that we have taken a look at the these boxplots we can would guess that there would be a statistical difference in the average danceability, energy, and speechiness based on genres. While we expect that the duration and loudness of each genre would statistically be roughly the same even though we can pick out a few that appear to be on the upper or lower end of the spectrum it is not a huge difference.
 
-
 ### Summary Statistics
-Before we test to see if there is a statistical difference or not with each of these characteristics we would like to take a look at the means. The boxplots summarize the data by using the five number summary which showcases the minimum, first quartile, median, third quartile, and maximum of our data. These values are more likely to be skewed by outliers as compared to the mean. Below we have a couple tables that display the mean of each genre for the characteristics we are studying.
+
+We will be performing ANOVA tests to determine if the genres have the same average value for each of the variables that we are interested in. The ANOvA test looks at the means whereas the boxplots summarize the data by using the five number summary which showcases the minimum, first quartile, median, third quartile, and maximum of our data. The five number summary values are more likely to be skewed by outliers as compared to the mean. Below we have a couple tables that display the mean of each genre for the characteristics we are studying. In the appendix you will find a table with the mean values for each genre for each of the variables we studied. When looking through the means for each characteristic it can be noted that there is at least one genre that appears to be different than the rest. 
+
+From looking at the means we can see a few characteristics that appears to make each genre stand apart. EDM tends to be loud with high energy. EDM is the least popular genre that we studied.
+
+R&B tends to have longer tracks and is quiet compared to other genres R&B also is low on energy and on the longer end for duration. R&B is the second least popular genre in our study.
+
+Rock is the third least popular genre in our study, but it is only slightly more popular than R&B. Rock often is quiet compared to the other genres, but has a notably longer track length. 
+
+
+Rap comes next in popularity rankings, it is the fourth least popular, making it the third most popular. Rap typically is very speechy and has a high danceability score.
+
+Latin typically is shorter than other genres and has a high danceability rating. Latin is the second most popular genre. 
+
+The most popular genre is pop, though it only beats out Latin by a small margin. Pop tracks tend to be on the shorter end for track length and has very little speechiness. 
+
+From this summary we can see that Latin and pop music share a few traits and R&B and rock share similar traits. We also notice that each of those pairs have similar popularity rankings. This would lead us to hypothesis that there are certain characteristics that might influence the popularity of the track.
 
 
 ```{r, warning=F, message=F, echo=F}
@@ -112,6 +127,8 @@ spotify_songs_rock<-filter(spotify_songs, playlist_genre=="rock")
 
 
 ## Results
+
+Before we get to testing whether or not our variables have a relationship with the popularity of a track we want to determine if there is even a statistical difference between the genres when looking at each of the track trait variables. We performed an ANOVA test on each of the characteristic.
 
 Interestingly even though we guessed that there may not be a statistical difference with the duration and the loudness of tracks  between the genres we found in all of the overall F-tests shown above that we should reject the null hypothesis that the mean speechiness, energy, danceability, loudness, duration, and popularity are the same. This means that there is a difference with all of these characteristics across each genre. We will investigate these differences using a Tukey test to determine which genres are different that the others.
 

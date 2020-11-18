@@ -133,23 +133,137 @@ maximum of our data. These values are more likely to be skewed by
 outliers as compared to the mean. Below we have a couple tables that
 display the mean of each genre for the characteristics we are studying.
 
-> Can we split the table into two tables with one having the count,
-> loudness, and duration and the other having the danceability, energy,
-> and speechiness. I think splitting like this would be good so that we
-> don’t have to scroll when looking at the paper and it groups the data
-> by characteristics that appear to have more of a difference between
-> the genres.
-
-| playlist\_genre | count | mean\_loudness | mean\_duration\_in\_ms | mean\_danceability | mean\_speechiness | mean\_energry | mean\_mean\_popularity |
-| :-------------- | ----: | -------------: | ---------------------: | -----------------: | ----------------: | ------------: | ---------------------: |
-| edm             |  6043 |         \-5.43 |                 222541 |              0.655 |             0.087 |         0.802 |                   34.8 |
-| latin           |  5155 |         \-6.26 |                 216863 |              0.713 |             0.103 |         0.708 |                   47.0 |
-| pop             |  5507 |         \-6.32 |                 217768 |              0.639 |             0.074 |         0.701 |                   47.7 |
-| r\&b            |  5431 |         \-7.87 |                 237599 |              0.670 |             0.117 |         0.591 |                   41.2 |
-| rap             |  5746 |         \-7.04 |                 214164 |              0.718 |             0.198 |         0.651 |                   43.2 |
-| rock            |  4951 |         \-7.59 |                 248577 |              0.521 |             0.058 |         0.733 |                   41.7 |
-
 ## Results
+
+Interestingly even though we guessed that there may not be a statistical
+difference with the duration and the loudness of tracks between the
+genres we found in all of the overall F-tests shown above that we should
+reject the null hypothesis that the mean speechiness, energy,
+danceability, loudness, duration, and popularity are the same. This
+means that there is a difference with all of these characteristics
+across each genre. We will investigate these differences using a Tukey
+test to determine which genres are different that the others.
+
+When we conduct the Tukey test we can see that there is a significant
+difference in the speechiness of each genre. This was not a very
+surprising result though as we figured that at least rap was
+significantly different that each of the other genres.
+
+When comparing the genres to each other for energy using the Tukey test
+we found that there is a significant difference between each of the
+genres expect for pop and latin. It was found that statistically there
+is not a difference between the amount of energy in the tracks that are
+of the genres pop and latin.
+
+The Tukey test when looking at danceability found that rap and latin
+have a similar danceability level while all of the other genres are
+statistically different.
+
+When looking at the loudness of genres using the tukey test we see that
+pop and latin are extremely similar, but the other genres are all
+different for the level of loudness.
+
+When analyzing the duration of track across the genres we found from the
+Tukey test that pop, latin, and rap have similar durations to each
+other, but the other genres are all different.
+
+When looking at popularity rock and R\&B have very similar popularity
+rankings as do pop and latin. Rock and rap are also similar, but it is
+not as strong of a similarity.
+
+### Explore the relationship between popularity and each of the following: danceability, energy, speechiness, length, and loudness.
+
+### Danceability
+
+![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+From the scatterplot, there appears to be no significant relationship
+between danceability and track popularity.Since our r squared value is
+close to zero,the variation observed in track popularity is not
+explained by danceability.
+
+### Energy
+
+![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+From the scatterplot, there appears to be slightly negative relationship
+between track popularity and energy but variation in track popularity is
+not explained by energy as we see r squared value is close to zero.
+
+### Speechiness
+
+![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+
+From the scatterplot, it appears that there is no significant
+relationship between track popularity and speechiness. As we can see any
+variation in track popularity cannot be explained by speechiness since r
+squared is almost close to 0.
+
+### Length (duration)
+
+![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
+This scatterplot shows that there is a negative relationship between
+duration of song and track popularity but since r squared value is close
+to zero
+
+### Loudness
+
+![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+
+There appears to be no significant relationship between track popularity
+and loudness since our r squared value is closer to zero, most of
+variation is not explained by the loudness which suggests that there
+might other variables at play.
+
+## Conclusions
+
+From our study we feel that we can say that there is no clear
+relationship between the 5 characteristics that we studied and the
+popularity of the track. It was interesting though to note the unique
+characteristics that made each genre have it’s own appeal. Ultimately it
+is not terribly surprising that there is no one characteristic that will
+make a song more popular. With the wide range of people who listen to
+music there should be a wide range of traits that are desirable and will
+result in a popular song.
+
+If we had time to further our study we would like to… \>need to write a
+nice conclusion.
+
+## Group Members
+
+Neetu Regmi Oliver Titus Cassie Tangen
+
+## References:
+
+(n.d.). Retrieved from R Wrapper for the ‘Spotify’ Web API:
+<https://www.rcharlie.com/spotifyr/> Mock, T. (2020, January 21).
+Retrieved from TidyTuesday:
+<https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-21>)
+Spotify. (2020, November 10). Retrieved from Wikipedia:
+<https://en.wikipedia.org/wiki/Spotify>
+
+## Appendix: Summary Statistics and Results Tables
+
+### Summary Statistics
+
+| playlist\_genre | count | mean\_loudness | mean\_duration\_in\_ms | mean\_danceability |
+| :-------------- | ----: | -------------: | ---------------------: | -----------------: |
+| edm             |  6043 |         \-5.43 |                 222541 |              0.655 |
+| latin           |  5155 |         \-6.26 |                 216863 |              0.713 |
+| pop             |  5507 |         \-6.32 |                 217768 |              0.639 |
+| r\&b            |  5431 |         \-7.87 |                 237599 |              0.670 |
+| rap             |  5746 |         \-7.04 |                 214164 |              0.718 |
+| rock            |  4951 |         \-7.59 |                 248577 |              0.521 |
+
+| playlist\_genre | count | mean\_speechiness | mean\_energry | mean\_mean\_popularity |
+| :-------------- | ----: | ----------------: | ------------: | ---------------------: |
+| edm             |  6043 |             0.087 |         0.802 |                   34.8 |
+| latin           |  5155 |             0.103 |         0.708 |                   47.0 |
+| pop             |  5507 |             0.074 |         0.701 |                   47.7 |
+| r\&b            |  5431 |             0.117 |         0.591 |                   41.2 |
+| rap             |  5746 |             0.198 |         0.651 |                   43.2 |
+| rock            |  4951 |             0.058 |         0.733 |                   41.7 |
 
 ### ANOVA for Speechiness
 
@@ -193,15 +307,6 @@ display the mean of each genre for the characteristics we are studying.
 | playlist\_genre |     5 |   627013 | 125403 |       207 |       0 |
 | Residuals       | 32827 | 19866852 |    605 |        NA |      NA |
 
-Interestingly even though we guessed that there may not be a statistical
-difference with the duration and the loudness of tracks between the
-genres we found in all of the overall F-tests shown above that we should
-reject the null hypothesis that the mean speechiness, energy,
-danceability, loudness, duration, and popularity are the same. This
-means that there is a difference with all of these characteristics
-across each genre. We will investigate these differences using a Tukey
-test to determine which genres are different that the others.
-
 ### Tukey Test for Speechiness
 
 | term            | contrast   | null.value | estimate | conf.low | conf.high | adj.p.value |
@@ -221,37 +326,6 @@ test to determine which genres are different that the others.
 | playlist\_genre | rap-r\&b   |          0 |    0.081 |    0.076 |     0.086 |           0 |
 | playlist\_genre | rock-r\&b  |          0 |  \-0.059 |  \-0.064 |   \-0.054 |           0 |
 | playlist\_genre | rock-rap   |          0 |  \-0.140 |  \-0.145 |   \-0.135 |           0 |
-
-When we conduct the Tukey test we can see that there is a significant
-difference in the speechiness of each genre. This was not a very
-surprising result though as we figured that at least rap was
-significantly different that each of the other genres.
-
-### Tukey Test for Energy
-
-| term            | contrast   | null.value | estimate | conf.low | conf.high | adj.p.value |
-| :-------------- | :--------- | ---------: | -------: | -------: | --------: | ----------: |
-| playlist\_genre | latin-edm  |          0 |  \-0.094 |  \-0.103 |   \-0.085 |       0.000 |
-| playlist\_genre | pop-edm    |          0 |  \-0.101 |  \-0.110 |   \-0.093 |       0.000 |
-| playlist\_genre | r\&b-edm   |          0 |  \-0.212 |  \-0.220 |   \-0.203 |       0.000 |
-| playlist\_genre | rap-edm    |          0 |  \-0.152 |  \-0.161 |   \-0.143 |       0.000 |
-| playlist\_genre | rock-edm   |          0 |  \-0.070 |  \-0.079 |   \-0.060 |       0.000 |
-| playlist\_genre | pop-latin  |          0 |  \-0.007 |  \-0.017 |     0.002 |       0.221 |
-| playlist\_genre | r\&b-latin |          0 |  \-0.117 |  \-0.127 |   \-0.108 |       0.000 |
-| playlist\_genre | rap-latin  |          0 |  \-0.058 |  \-0.067 |   \-0.048 |       0.000 |
-| playlist\_genre | rock-latin |          0 |    0.025 |    0.015 |     0.034 |       0.000 |
-| playlist\_genre | r\&b-pop   |          0 |  \-0.110 |  \-0.119 |   \-0.101 |       0.000 |
-| playlist\_genre | rap-pop    |          0 |  \-0.050 |  \-0.059 |   \-0.041 |       0.000 |
-| playlist\_genre | rock-pop   |          0 |    0.032 |    0.022 |     0.041 |       0.000 |
-| playlist\_genre | rap-r\&b   |          0 |    0.060 |    0.051 |     0.069 |       0.000 |
-| playlist\_genre | rock-r\&b  |          0 |    0.142 |    0.132 |     0.151 |       0.000 |
-| playlist\_genre | rock-rap   |          0 |    0.082 |    0.073 |     0.091 |       0.000 |
-
-When comparing the genres to each other for energy using the Tukey test
-we found that there is a signficant difference between each of the
-genres expect for pop and latin. It was found that statistically there
-is not a difference between the amount of energy in the tracks that are
-of the genres pop and latin.
 
 ### Tukey Test for Danceability
 
@@ -273,9 +347,25 @@ of the genres pop and latin.
 | playlist\_genre | rock-r\&b  |          0 |  \-0.150 |  \-0.157 |   \-0.142 |       0.000 |
 | playlist\_genre | rock-rap   |          0 |  \-0.198 |  \-0.205 |   \-0.191 |       0.000 |
 
-The Tukey test when looking at danceability found that rap and latin
-have a similar danceability level while all of the other genres are
-statistically different.
+### Tukey Test for Energy
+
+| term            | contrast   | null.value | estimate | conf.low | conf.high | adj.p.value |
+| :-------------- | :--------- | ---------: | -------: | -------: | --------: | ----------: |
+| playlist\_genre | latin-edm  |          0 |  \-0.094 |  \-0.103 |   \-0.085 |       0.000 |
+| playlist\_genre | pop-edm    |          0 |  \-0.101 |  \-0.110 |   \-0.093 |       0.000 |
+| playlist\_genre | r\&b-edm   |          0 |  \-0.212 |  \-0.220 |   \-0.203 |       0.000 |
+| playlist\_genre | rap-edm    |          0 |  \-0.152 |  \-0.161 |   \-0.143 |       0.000 |
+| playlist\_genre | rock-edm   |          0 |  \-0.070 |  \-0.079 |   \-0.060 |       0.000 |
+| playlist\_genre | pop-latin  |          0 |  \-0.007 |  \-0.017 |     0.002 |       0.221 |
+| playlist\_genre | r\&b-latin |          0 |  \-0.117 |  \-0.127 |   \-0.108 |       0.000 |
+| playlist\_genre | rap-latin  |          0 |  \-0.058 |  \-0.067 |   \-0.048 |       0.000 |
+| playlist\_genre | rock-latin |          0 |    0.025 |    0.015 |     0.034 |       0.000 |
+| playlist\_genre | r\&b-pop   |          0 |  \-0.110 |  \-0.119 |   \-0.101 |       0.000 |
+| playlist\_genre | rap-pop    |          0 |  \-0.050 |  \-0.059 |   \-0.041 |       0.000 |
+| playlist\_genre | rock-pop   |          0 |    0.032 |    0.022 |     0.041 |       0.000 |
+| playlist\_genre | rap-r\&b   |          0 |    0.060 |    0.051 |     0.069 |       0.000 |
+| playlist\_genre | rock-r\&b  |          0 |    0.142 |    0.132 |     0.151 |       0.000 |
+| playlist\_genre | rock-rap   |          0 |    0.082 |    0.073 |     0.091 |       0.000 |
 
 ### Tukey Test for Loudness
 
@@ -297,10 +387,6 @@ statistically different.
 | playlist\_genre | rock-r\&b  |          0 |    0.276 |    0.115 |     0.436 |       0.000 |
 | playlist\_genre | rock-rap   |          0 |  \-0.547 |  \-0.705 |   \-0.388 |       0.000 |
 
-When looking at the loudness of genres using the tukey test we see that
-pop and latin are extremely similar, but the other genres are all
-different for the level of loudness.
-
 ### Tukey Test for Duration
 
 | term            | contrast   | null.value | estimate | conf.low | conf.high | adj.p.value |
@@ -320,10 +406,6 @@ different for the level of loudness.
 | playlist\_genre | rap-r\&b   |          0 |  \-23436 |  \-26594 |   \-20277 |       0.000 |
 | playlist\_genre | rock-r\&b  |          0 |    10977 |     7697 |     14257 |       0.000 |
 | playlist\_genre | rock-rap   |          0 |    34413 |    31176 |     37649 |       0.000 |
-
-When analyzing the duration of track across the genres we found from the
-Tukey test that pop, latin, and rap have similar durations to each
-other, but the other genres are all different.
 
 ### Tukey Test for Popularity
 
@@ -345,17 +427,7 @@ other, but the other genres are all different.
 | playlist\_genre | rock-r\&b  |          0 |    0.505 |  \-0.873 |     1.882 |       0.903 |
 | playlist\_genre | rock-rap   |          0 |  \-1.487 |  \-2.847 |   \-0.128 |       0.022 |
 
-When looking at popularity rock and R\&B have very similar popularity
-rankings as do pop and latin. Rock and rap are also similiar, but it is
-not as strong of a similarity.
-
-## Explore the relationship between popularity and each of the following: danceability, energy, speechiness, length, and loudness.
-
-## Danceability
-
-![](README_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
-
-### Regression Output
+### Regression Output: Danceability
 
 | term         | estimate | std\_error | statistic | p\_value | lower\_ci | upper\_ci |
 | :----------- | -------: | ---------: | --------: | -------: | --------: | --------: |
@@ -366,16 +438,7 @@ not as strong of a similarity.
 | ---------: | --------------: | --: | ---: | ----: | --------: | -------: | -: | ----: |
 |      0.004 |           0.004 | 622 | 24.9 |  24.9 |       138 |        0 |  1 | 32833 |
 
-From the scatterplot, there appears to be no significant relationship
-between danceability and track popularity.Since our r squared value is
-close to zero,the variation observed in track popularity is not
-explained by danceability.
-
-## Energy
-
-![](README_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
-
-### Regression Output
+### Regression Output: Energy
 
 | term      | estimate | std\_error | statistic | p\_value | lower\_ci | upper\_ci |
 | :-------- | -------: | ---------: | --------: | -------: | --------: | --------: |
@@ -386,15 +449,7 @@ explained by danceability.
 | ---------: | --------------: | --: | ---: | ----: | --------: | -------: | -: | ----: |
 |      0.012 |           0.012 | 617 | 24.8 |  24.8 |       396 |        0 |  1 | 32833 |
 
-From the scatterplot, there appears to be slightly negative relationship
-between track popularity and energy but variation in track popularity is
-not explained by energy as we see r squared value is close to zero.
-
-## Speechiness
-
-![](README_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
-
-### Regression Output
+### Regression Output: Speechiness
 
 | term        | estimate | std\_error | statistic | p\_value | lower\_ci | upper\_ci |
 | :---------- | -------: | ---------: | --------: | -------: | --------: | --------: |
@@ -405,16 +460,7 @@ not explained by energy as we see r squared value is close to zero.
 | ---------: | --------------: | --: | ---: | ----: | --------: | -------: | -: | ----: |
 |          0 |               0 | 624 |   25 |    25 |      1.53 |    0.217 |  1 | 32833 |
 
-From the scatterplot, it appears that there is no significant
-relationship between track popularity and speechiness. As we can see any
-variation in track popularity cannot be explained by speechiness since r
-squared is almost close to 0.
-
-## Length (duration)
-
-![](README_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
-
-### Regression Output
+### Regression Output: Duration
 
 | term         | estimate | std\_error | statistic | p\_value | lower\_ci | upper\_ci |
 | :----------- | -------: | ---------: | --------: | -------: | --------: | --------: |
@@ -425,15 +471,7 @@ squared is almost close to 0.
 | ---------: | --------------: | --: | ---: | ----: | --------: | -------: | -: | ----: |
 |      0.021 |           0.021 | 611 | 24.7 |  24.7 |       692 |        0 |  1 | 32833 |
 
-This scatterplot shows that there is a negative relationship between
-duration of song and track popularity but since r squared value is close
-to zero
-
-## Loudness
-
-![](README_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
-
-### Regression Output
+### Regression Output: Loudness
 
 | term      | estimate | std\_error | statistic | p\_value | lower\_ci | upper\_ci |
 | :-------- | -------: | ---------: | --------: | -------: | --------: | --------: |
@@ -443,35 +481,3 @@ to zero
 | r\_squared | adj\_r\_squared | mse | rmse | sigma | statistic | p\_value | df |  nobs |
 | ---------: | --------------: | --: | ---: | ----: | --------: | -------: | -: | ----: |
 |      0.003 |           0.003 | 622 | 24.9 |  24.9 |       110 |        0 |  1 | 32833 |
-
-There appears to be no significant relationship between track popularity
-and loudness since our r squared value is closer to zero, most of
-variation is not explained by the loudness which suggests that there
-might other variables at play.
-
-## Conclusions
-
-From our study we feel that we can say that there is no clear
-relationship between the 5 characteristics that we studied and the
-popularity of the track. It was interesting though to note the unique
-characteristics that made each genre have it’s own appeal. Ultimately it
-is not terribly surprising that there is no one characteristic that will
-make a song more poplular. With the wide range of people who listen to
-music there should be a wide range of traits that are desireable and
-will result in a popular song.
-
-If we had time to further our study we would like to… \>need to write a
-nice conclusion.
-
-## Group Members
-
-Neetu Regmi Oliver Titus Cassie Tangen
-
-## References:
-
-(n.d.). Retrieved from R Wrapper for the ‘Spotify’ Web API:
-<https://www.rcharlie.com/spotifyr/> Mock, T. (2020, January 21).
-Retrieved from TidyTuesday:
-<https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-21>)
-Spotify. (2020, November 10). Retrieved from Wikipedia:
-<https://en.wikipedia.org/wiki/Spotify>
