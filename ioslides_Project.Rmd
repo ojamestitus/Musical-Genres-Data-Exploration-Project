@@ -3,8 +3,8 @@ title: "Musical Genres"
 author: "Neetu Regmi, Cassie Tangen, Oliver Titus"
 date: "10/20/2020"
 output:
-  beamer_presentation: default
   ioslides_presentation: default
+  beamer_presentation: default
 subtitle: UNL STAT 850
 ---
 
@@ -121,8 +121,8 @@ summary_table2 %>% kable()
 ## ANOVA Test Results
 
 - Performed ANOVA test to determine if there is a statistical difference between genres across all track trait variables.
--Based on F-test, We were able to reject the null Hypothesis i.e mean of all variables are same.
--There is enough evidence to support that there is a difference with all of these characteristics across each genre.
+- Based on F-test, We were able to reject the null Hypothesis i.e mean of all variables are same.
+- There is enough evidence to support that there is a difference with all of these characteristics across each genre.
 
 ## Linear Regression
 ```{r, echo=FALSE, message=FALSE}
@@ -165,8 +165,8 @@ ggplot(spotify_songs, aes(x=loudness, y=track_popularity)) +
 
 -From the study, we conclude that there is not one defining characteristics that will make track more popular.
 - If we have more time, we would compare genres that are most similar to determine if the characteristics are same or different.
--Furthermore, it would be interesting to study other genres including some of the subgenres which will encompass more genre than in our study.
--In addition, it would be interesting to determine if there exists a relationship between the characteristics that are similar between genres.
+- Furthermore, it would be interesting to study other genres including some of the subgenres which will encompass more genre than in our study.
+- In addition, it would be interesting to determine if there exists a relationship between the characteristics that are similar between genres.
 
 
 ## References
