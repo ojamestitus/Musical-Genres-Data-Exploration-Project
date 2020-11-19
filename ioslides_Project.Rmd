@@ -1,0 +1,170 @@
+---
+title: "Musical Genres"
+subtitle: "UNL STAT 850"
+author: "Neetu Regmi, Cassie Tangen, Oliver Titus"
+date: "10/20/2020"
+output:
+  ioslides_presentation: default
+---
+
+## Introduction
+
+- Music
+
+>let's insert a picture here of spotify's logo?
+
+
+## Data collection
+
+- TidyTuesday
+- Spotifyr
+
+
+## Genres
+
+- Rock
+- R&B
+- Rap
+- EDM
+- Latin
+- Pop
+
+## Variables
+
+- Duration
+- Danceability
+- Energy
+- Loudness
+- Speechiness
+- Popularity
+
+## Proposed Study
+
+- Determine if there are defining characteristics for each genre.
+- Determine if a relationship between track traits and track popularity exists.
+
+## Boxplot
+
+```{r,include=FALSE,echo=FALSE}
+# load the data
+spotify_songs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-21/spotify_songs.csv')
+```
+
+```{r, warning=F, message=F, echo=F}
+library(tidyverse)
+library(dplyr)
+library(knitr)
+library(broom)
+library(moderndive)
+ggplot(spotify_songs, aes(y=duration_ms, fill=playlist_genre)) + geom_boxplot() + ggtitle("Duration for each Genre") + ylab("Milliseconds (ms)") + scale_fill_discrete(name = "Genre", labels = c("EDM", "Latin", "Pop", "R&B", "Rap", "Rock"))
+```
+
+
+## Boxplot
+
+```{r, warning=F, message=F, echo=F}
+ggplot(spotify_songs, aes(y=loudness, fill=playlist_genre)) + geom_boxplot() + ggtitle("Loudness for each Genre") + ylab("Decibals (dB)") + scale_fill_discrete(name = "Genre", labels = c("EDM", "Latin", "Pop", "R&B", "Rap", "Rock"))
+```
+
+
+## Boxplot 
+
+```{r, warning=F, message=F, echo=F}
+ggplot(spotify_songs, aes(y=danceability, fill=playlist_genre)) + ggtitle("Danceability for each Genre") + geom_boxplot() + ylab("Danceability") + scale_fill_discrete(name = "Genre", labels = c("EDM", "Latin", "Pop", "R&B", "Rap", "Rock"))
+```
+
+
+## Boxplot 
+
+```{r, warning=F, message=F, echo=F}
+ggplot(spotify_songs, aes(y=energy, fill=playlist_genre)) + 
+    geom_boxplot() + ggtitle("Energy for each Genre") + ylab("Energy") + scale_fill_discrete(name = "Genre", labels = c("EDM", "Latin", "Pop", "R&B", "Rap", "Rock"))
+```
+
+
+## Boxplot
+
+
+```{r, warning=F, message=F, echo=F}
+ggplot(spotify_songs, aes(y=speechiness, fill=playlist_genre)) + 
+    geom_boxplot() + ggtitle("Speechiness for each Genre") + ylab("Speechiness") + scale_fill_discrete(name = "Genre", labels = c("EDM", "Latin", "Pop", "R&B", "Rap", "Rock"))
+```
+
+
+## Boxplot
+
+```{r, warning=F, message=F, echo=F}
+ggplot(spotify_songs, aes(y=track_popularity, fill=playlist_genre)) + geom_boxplot() + ggtitle("Popularity for each Genre") + ylab("Track Popularity") + scale_fill_discrete(name = "Genre", labels = c("EDM", "Latin", "Pop", "R&B", "Rap", "Rock"))
+```
+
+## Summary Statistics
+
+
+```{r, warning=F, message=F, echo=F}
+summary_table1<- group_by(spotify_songs, playlist_genre) %>% summarise(count=n(), mean_loudness=mean(loudness), mean_duration_in_ms=mean(duration_ms), mean_danceability=mean(danceability))
+
+summary_table2<- group_by(spotify_songs, playlist_genre) %>% summarise(count=n(), mean_speechiness=mean(speechiness), mean_energry=mean(energy), mean_mean_popularity=mean(track_popularity))
+
+summary_table1 %>% kable()
+
+```
+
+## Summary Statistics
+
+
+```{r, warning=F, message=F, echo=F}
+
+summary_table2 %>% kable()
+```
+
+## ANOVA Test Results
+
+Add some bullets here about the results from the ANOVA tests
+
+## Linear Regression
+```{r, echo=FALSE, message=FALSE}
+ggplot(spotify_songs, aes(x=danceability, y=track_popularity)) + 
+    geom_point()+geom_smooth(method=lm) + ggtitle("Track Popularity vs. Danceability") + xlab("Danceability") + ylab("Track Popularity")
+
+```
+
+## Linear Regression
+```{r, echo=FALSE, message=FALSE}
+ggplot(spotify_songs, aes(x=energy, y=track_popularity)) + 
+    geom_point()+geom_smooth(method=lm) + ggtitle("Track Popularity vs. Energy") + xlab("Energy") + ylab("Track Popularity")
+
+```
+
+
+## Linear Regression
+```{r, echo=FALSE, message=FALSE}
+ggplot(spotify_songs, aes(x=speechiness, y=track_popularity)) + 
+    geom_point()+geom_smooth(method=lm) + ggtitle("Track Popularity vs. Speechiness") + xlab("Speechiness") + ylab("Track Popularity")
+```
+
+
+## Linear Regression
+
+```{r, echo=FALSE, message=FALSE}
+ggplot(spotify_songs, aes(x=duration_ms, y=track_popularity)) + 
+    geom_point()+geom_smooth(method=lm) + ggtitle("Track Popularity vs. Duration") + xlab("Milliseconds (ms)") + ylab("Track Popularity")
+```
+
+
+## Linear Regresssion
+```{r, echo=FALSE, message=FALSE}
+ggplot(spotify_songs, aes(x=loudness, y=track_popularity)) + 
+    geom_point()+geom_smooth(method=lm) + ggtitle("Track Popularity vs. Loudness") + xlab("Decibals (dB)") + ylab("Track Popularity")
+```
+
+
+## Conclusions
+
+add a few bullets about conclusions
+
+## References
+
+(n.d.). Retrieved from R Wrapper for the 'Spotify' Web API: https://www.rcharlie.com/spotifyr/
+Mock, T. (2020, January 21). Retrieved from TidyTuesday: https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-21)
+Spotify. (2020, November 10). Retrieved from Wikipedia: https://en.wikipedia.org/wiki/Spotify
+
