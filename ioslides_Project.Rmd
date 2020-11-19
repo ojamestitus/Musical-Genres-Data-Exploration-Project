@@ -1,7 +1,7 @@
 ---
 title: "Musical Genres"
 author: "Neetu Regmi, Cassie Tangen, Oliver Titus"
-date: "10/20/2020"
+date: "11/19/2020"
 output:
   ioslides_presentation: default
   beamer_presentation: default
@@ -11,40 +11,58 @@ subtitle: UNL STAT 850
 ## Introduction
 
 - Music
-
-
+<br>
+- TidyTuesday
+<br>
+- Spotifyr
+<br>
 
 <center>
 ![](images/1200px-Spotify_logo_without_text.svg.png){width=20%}
 
 
-## Data collection
+## Data Description{.columns-2 .smaller}
 
-- TidyTuesday
-- Spotifyr
-
-
-## Genres
+Genres:
 
 - Rock
+<br>
 - R&B
+<br>
 - Rap
+<br>
 - EDM
+<br>
 - Latin
+<br>
 - Pop
 
-## Variables
+<p class="forceBreak"></p>
+
+Variables:
 
 - Duration
+<br>
 - Danceability
+<br>
 - Energy
+<br>
 - Loudness
+<br>
 - Speechiness
+<br>
 - Popularity
 
 ## Proposed Study
 
+<br>
+
 - Determine if there are defining characteristics for each genre.
+
+<br>
+
+<br>
+
 - Determine if a relationship between track traits and track popularity exists.
 
 ## Boxplot
@@ -124,7 +142,13 @@ summary_table2 %>% kable()
 ## ANOVA Test Results
 
 - Performed ANOVA test to determine if there is a statistical difference between genres across all track trait variables.
+
+<br>
+
 - Based on F-test, We were able to reject the null Hypothesis i.e mean of all variables are same.
+
+<br>
+
 - There is enough evidence to support that there is a difference with all of these characteristics across each genre.
 
 ## Linear Regression
