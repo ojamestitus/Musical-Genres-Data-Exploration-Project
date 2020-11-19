@@ -166,7 +166,7 @@ ggplot(spotify_songs, aes(x=loudness, y=track_popularity)) +
 
 ## Conclusions
 
--From the study, we conclude that there is not one defining characteristics that will make track more popular.
+- From the study, we conclude that there is not one defining characteristics that will make track more popular.
 - If we have more time, we would compare genres that are most similar to determine if the characteristics are same or different.
 - Furthermore, it would be interesting to study other genres including some of the subgenres which will encompass more genre than in our study.
 - In addition, it would be interesting to determine if there exists a relationship between the characteristics that are similar between genres.
