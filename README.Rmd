@@ -1,11 +1,14 @@
 ---
 title: "STAT 850 Final Project"
 author: "Neetu Regmi, Cassie Tangen, Oliver Titus"
-output: github_document
+keywords: [music, spotify, dance]
+output: 
+  pagedown::jss_paged:
+    self_contained: false
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, cache = T)
 options(digits = 3)
 ```
 
@@ -20,7 +23,7 @@ library(SASmarkdown)
 ```
 
 
-## Introduction
+# Introduction
 
 Music plays a role in everyone’s life regardless of age, race, gender, social class or any other defining characteristic. With the expansion of the world wide web numerous online music streaming platforms have become a popular source of listening to music. One such platform is Spotify. Spotify first launched in 2008 and has grown to offer more than 60 million songs. Spotify contains songs from a variety of genres and keeps track of the popularity of each track along with various other characteristics of each track. As a group we were interested in studying these characteristics to determine if there are unique characteristics that make each genre unique, or if some of the characteristics are shared across the genres. (Spotify, 2020)
 
@@ -31,7 +34,7 @@ We were able to find a nice set of data from TidyTuesday. The data was shared in
 spotify_songs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-21/spotify_songs.csv')
 ```
 
-## Data Description
+# Data Description
 
 The genres that data was collected on include rock, R&B, rap, EDM, Latin, and pop. Each of these genre’s likely illicit thoughts about certain characteristics. For example, rock and EDM I then to think of loud, whereas R&B I tend to think is softer. Rap is often thought to be almost spoken whereas Latin is much more musical with the vocals. Latin or pop are often thought as a genre for dancing and rock is not a genre many people dance to. Thinking about how each of these genres are so vastly different we are going to look at 5 characteristics that we feel would be different across the genres. 
 
@@ -39,10 +42,10 @@ The characteristics that we determined would be best to study were the duration,
 
 We should begin with an explanation of our variables. Duration is the measure of the length of the song and is reported in milliseconds. Danceability is a value between 0.0 and 1.0 where 0.0 is the least danceable and 1.0 is the most danceable. The danceability is determined by an algorithm that looks at the beat strength, tempo, rhythm stability, and overall regularity. Energy is a value between 0.0 and 1.0 that represents the intensity and activity. Energetic tracks are often fast and noisy. The loudness is measured in decibels (dB) and is the average of the decibels across the entire track. Values will typically range between -60 and 0 dB. Speechiness is the measure of the spoken word present in a song. The closer the value is to 1 the more speech-like the track. Songs above 0.66 are likely entirely spoken words. (Mock, 2020)
 
-## Data Summary
+# Data Summary
 We will look at the interesting variables mentioned above for each of the genre to attempt to determine a defining characteristic or two about each genre. Let's first look at a nice stacked boxplot for each of the variables that we are interested in exploring along with a boxplot of the popularity of each genre. These might give us a visual idea of which variables are key characteristics for each genre.
 
-### Visual Exploration of Data
+## Visual Exploration of Data
 
 ```{r, warning=F, message=F, echo=F}
 library(tidyverse)
@@ -91,7 +94,7 @@ As we conclude our graphical comparisons we wanted to take a look at the popular
 
 Now that we have taken a look at the these boxplots we can would guess that there would be a statistical difference in the average danceability, energy, and speechiness based on genres. While we expect that the duration and loudness of each genre would statistically be roughly the same even though we can pick out a few that appear to be on the upper or lower end of the spectrum it is not a huge difference.
 
-### Summary Statistics
+## Summary Statistics
 
 We will be performing ANOVA tests to determine if the genres have the same average value for each of the variables that we are interested in. The ANOvA test looks at the means whereas the boxplots summarize the data by using the five number summary which showcases the minimum, first quartile, median, third quartile, and maximum of our data. The five number summary values are more likely to be skewed by outliers as compared to the mean. In the appendix you will find a table with the mean values for each genre for each of the variables we studied. When looking through the means for each characteristic it can be noted that there is at least one genre that appears to be different than the rest. 
 
@@ -119,7 +122,7 @@ spotify_songs_rock<-filter(spotify_songs, playlist_genre=="rock")
 ```
 
 
-## Results
+# Results
 
 We ran a few different tests on our data to determine if there is a difference in our genres based on the 5 track characteristics we selected, then to determine if any of those characteristics had an impact on the overall popularity of the track.
 
@@ -131,10 +134,10 @@ We were able to determine that pop and latin are similar in energy, loudness, an
 
 After analyzing the differences between the genres with the ANOVA test we find that pop and latin are very similar in characteristics and also have very similar popularity ratings. This leads us further to guess that there will be a relationship between the track characteristics and the popularity rating.
 
-### Testing for linear relationships between track characteristics and popularity. 
+## Testing for linear relationships between track characteristics and popularity. 
 As we perform tests to determine if there are linear relationships between the track characteristics and the popularity of the track we also looked at the scatterplots. For many of the scatterplots we were able to see fairly clearly that there would not be a linear relationship between the characteristics and the popularity. 
 
-#### Danceability
+### Danceability
 ```{r, message=FALSE}
 ggplot(spotify_songs, aes(x=danceability, y=track_popularity)) + 
     geom_point()+geom_smooth(method=lm) + ggtitle("Track Popularity vs. Danceability") + xlab("Danceability") + ylab("Track Popularity")
@@ -143,7 +146,7 @@ ggplot(spotify_songs, aes(x=danceability, y=track_popularity)) +
 
 From the scatterplot, there appears to be no significant relationship between danceability and track popularity. When we performed a linear regression test we found that both the correlation coefficent and the coefficient of determination are both close to zero. Thus,the variation observed in track popularity is not explained by danceability. 
 
-#### Energy
+### Energy
 ```{r, message=FALSE}
 ggplot(spotify_songs, aes(x=energy, y=track_popularity)) + 
     geom_point()+geom_smooth(method=lm) + ggtitle("Track Popularity vs. Energy") + xlab("Energy") + ylab("Track Popularity")
@@ -153,7 +156,7 @@ ggplot(spotify_songs, aes(x=energy, y=track_popularity)) +
 
 From the scatterplot, there appears to be slightly negative relationship between track popularity and energy. When we performed a linear regression test we found that both the correlation coefficent and the coefficient of determination are both close to zero. Thus, but variation in track popularity is not explained by energy.
 
-#### Speechiness
+### Speechiness
 ```{r, message=FALSE}
 ggplot(spotify_songs, aes(x=speechiness, y=track_popularity)) + 
     geom_point()+geom_smooth(method=lm) + ggtitle("Track Popularity vs. Speechiness") + xlab("Speechiness") + ylab("Track Popularity")
@@ -162,7 +165,7 @@ ggplot(spotify_songs, aes(x=speechiness, y=track_popularity)) +
 
 From the scatterplot, it appears that there is no significant relationship between track popularity and speechiness. When we performed a linear regression test we found that both the correlation coefficent and the coefficient of determination are both close to zero. Therefore, we can say that any variation in track popularity cannot be explained by speechiness.
 
-#### Duration
+### Duration
 
 ```{r, message=FALSE}
 ggplot(spotify_songs, aes(x=duration_ms, y=track_popularity)) + 
@@ -172,7 +175,7 @@ ggplot(spotify_songs, aes(x=duration_ms, y=track_popularity)) +
 
 This scatterplot shows that there may be a negative relationship between duration of song and track popularity. When we performed a linear regression test we found that both the correlation coefficent and the coefficient of determination are both close to zero. Yet again, we can say that any variation in track popularity cannot be explained by duration.
 
-#### Loudness
+### Loudness
 ```{r, message=FALSE}
 ggplot(spotify_songs, aes(x=loudness, y=track_popularity)) + 
     geom_point()+geom_smooth(method=lm) + ggtitle("Track Popularity vs. Loudness") + xlab("Decibals (dB)") + ylab("Track Popularity")
@@ -181,7 +184,7 @@ ggplot(spotify_songs, aes(x=loudness, y=track_popularity)) +
 
 There appears to be no significant relationship between track popularity and loudness. When we performed a linear regression test we found that both the correlation coefficent and the coefficient of determination are both close to zero. So, most of variation is not explained by the loudness which suggests that there might other variables at play.
 
-## Conclusions
+# Conclusions
 
 From our study we are able to say that while there are a few defining characteristics for each genre those characteristics do not predict the popularity of the track. It was interesting though to note the unique characteristics that made each genre have it's own appeal. Ultimately it is not terribly surprising that there is not one characteristic that will make a song more popular. With the wide range of people who listen to music there should be a wide range of traits that are desirable and will result in a popular song.
 
@@ -193,19 +196,15 @@ The final additional analysis that we would add would be to determine if there i
 
 Ultimately while we can pick apart the different genres by looking at various characteristics of the tracks music is not something that picks us apart as people; music brings us together. Whether you like rap, enjoy some good R&B, or get down with some rock, music is what brings people from every walk of life together. So don't over think it just go pull up spotify and relax to your favorite tunes.
 
-## Group Members
-Neetu Regmi 
-Oliver Titus 
-Cassie Tangen
 
-## References:
+# References:
 (n.d.). Retrieved from R Wrapper for the 'Spotify' Web API: https://www.rcharlie.com/spotifyr/
 Mock, T. (2020, January 21). Retrieved from TidyTuesday: https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-01-21)
 Spotify. (2020, November 10). Retrieved from Wikipedia: https://en.wikipedia.org/wiki/Spotify
 
-## Appendix: Summary Statistics and Results Tables
+# Appendix: Summary Statistics and Results Tables
 
-### Summary Statistics
+## Summary Statistics
 
 ```{r, warning=F, message=F, echo=F}
 summary_table1<- group_by(spotify_songs, playlist_genre) %>% summarise(count=n(), mean_loudness=mean(loudness), mean_duration_in_ms=mean(duration_ms), mean_danceability=mean(danceability))
@@ -225,78 +224,78 @@ duration_aov <- aov(duration_ms ~ playlist_genre, data=spotify_songs)
 popularity_aov <- aov(track_popularity ~ playlist_genre, data=spotify_songs)
 ```
 
-### ANOVA for Speechiness
+## ANOVA for Speechiness
 
 ```{r}
 tidy(speechiness_aov) %>% kable()
 ```
 
-### ANOVA for Energy
+## ANOVA for Energy
 
 ```{r}
 tidy(energy_aov) %>% kable()
 ```
 
-### ANOVA for Danceability
+## ANOVA for Danceability
 
 ```{r}
 tidy(danceability_aov) %>% kable()
 ```
 
-### ANOVA for Loudness
+## ANOVA for Loudness
 
 ```{r}
 tidy(loudness_aov) %>% kable()
 ```
 
-### ANOVA for Duration
+## ANOVA for Duration
 
 ```{r}
 tidy(duration_aov) %>% kable()
 ```
 
-### ANOVA for Popularity
+## ANOVA for Popularity
 
 ```{r}
 tidy(popularity_aov) %>% kable
 ```
 
-### Tukey Test for Speechiness
+## Tukey Test for Speechiness
 ```{r}
 tidy(TukeyHSD(speechiness_aov)) %>% kable()
 ```
 
-### Tukey Test for Danceability
+## Tukey Test for Danceability
 
 ```{r}
 tidy(TukeyHSD(danceability_aov)) %>% kable()
 ```
 
-### Tukey Test for Energy
+## Tukey Test for Energy
 
 ```{r}
 tidy(TukeyHSD(energy_aov)) %>% kable()
 ```
 
-### Tukey Test for Loudness
+## Tukey Test for Loudness
 
 ```{r}
 tidy(TukeyHSD(loudness_aov)) %>% kable()
 ```
 
-### Tukey Test for Duration
+## Tukey Test for Duration
 
 ```{r}
 tidy(TukeyHSD(duration_aov)) %>% kable()
 ```
 
-### Tukey Test for Popularity
+## Tukey Test for Popularity
 
 ```{r}
 tidy(TukeyHSD(popularity_aov)) %>% kable()
 ```
 
-### Regression Output: Danceability
+## Regression Output: Danceability
 
 ```{r}
 danceability_model <- lm(data=spotify_songs, track_popularity~danceability)
@@ -304,7 +303,7 @@ get_regression_table(danceability_model) %>% kable()
 get_regression_summaries(danceability_model) %>% kable()
 ```
 
-### Regression Output: Energy
+## Regression Output: Energy
 
 ```{r}
 energy_model <- lm(data=spotify_songs, track_popularity~energy)
@@ -312,7 +311,7 @@ get_regression_table(energy_model) %>% kable()
 get_regression_summaries(energy_model) %>% kable()
 ```
 
-### Regression Output: Speechiness
+## Regression Output: Speechiness
 
 ```{r}
 speechiness_model <- lm(data=spotify_songs, track_popularity~speechiness)
@@ -320,7 +319,7 @@ get_regression_table(speechiness_model) %>% kable()
 get_regression_summaries(speechiness_model) %>% kable()
 ```
 
-### Regression Output: Duration
+## Regression Output: Duration
 
 ```{r}
 duration_model <- lm(data=spotify_songs, track_popularity~duration_ms)
@@ -328,7 +327,7 @@ get_regression_table(duration_model) %>% kable()
 get_regression_summaries(duration_model) %>% kable()
 ```
 
-### Regression Output: Loudness
+## Regression Output: Loudness
 
 ```{r}
 loudness_model <- lm(data=spotify_songs, track_popularity~loudness)

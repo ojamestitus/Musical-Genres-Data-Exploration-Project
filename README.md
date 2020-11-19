@@ -354,7 +354,7 @@ Spotify. (2020, November 10). Retrieved from Wikipedia:
 | pop             |  5507 |         \-6.32 |                 217768 |              0.639 |
 | r\&b            |  5431 |         \-7.87 |                 237599 |              0.670 |
 | rap             |  5746 |         \-7.04 |                 214164 |              0.718 |
-| rock            |  4951 |         \-7.59 |                 248577 |              0.521 |
+| rock            |  4951 |         \-7.59 |                 248576 |              0.521 |
 
 | playlist\_genre | count | mean\_speechiness | mean\_energry | mean\_mean\_popularity |
 | :-------------- | ----: | ----------------: | ------------: | ---------------------: |
