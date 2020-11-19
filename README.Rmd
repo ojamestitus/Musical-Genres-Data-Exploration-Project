@@ -70,7 +70,7 @@ When inspecting the average loudness of tracks for each genre we discover a bit 
 ggplot(spotify_songs, aes(y=danceability, fill=playlist_genre)) + ggtitle("Danceability for each Genre") + geom_boxplot() + ylab("Danceability") + scale_fill_discrete(name = "Genre", labels = c("EDM", "Latin", "Pop", "R&B", "Rap", "Rock"))
 ```
 
-After a quick look at the boxplot for the danceability of each genre it is clear that rock is the least danceable. Latin is fairly danceable and surprisingly so is rap. We see that there are low outliers for each genre and that rock has a few high outliers as well. This shows us that each genre has a few songs that score poorly on the danceability rating. Also that rock does have a few songs that are fairly danceable even though as a genre rock appears to be the least danceable.
+After a quick look at the boxplot for the danceability of each genre, it is clear that rock is the least danceable. Latin is fairly danceable and surprisingly so is rap. We see that there are low outliers for each genre and that rock has a few high outliers as well. This shows us that each genre has a few songs that score poorly on the danceability rating. Also that rock does have a few songs that are fairly danceable even though as a genre rock appears to be the least danceable.
 
 ```{r, warning=F, message=F, echo=F}
 ggplot(spotify_songs, aes(y=energy, fill=playlist_genre)) + 
