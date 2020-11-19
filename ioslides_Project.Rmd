@@ -12,7 +12,10 @@ subtitle: UNL STAT 850
 
 - Music
 
->let's insert a picture here of spotify's logo?
+
+
+<center>
+![](images/1200px-Spotify_logo_without_text.svg.png){width=20%}
 
 
 ## Data collection
