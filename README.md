@@ -6,7 +6,7 @@ Neetu Regmi, Cassie Tangen, Oliver Titus
 
 Music plays a role in everyone’s life regardless of age, race, gender,
 social class or any other defining characteristic. With the expansion of
-the world wide web numerous online music streaming platforms have become
+the World Wide Web numerous online music streaming platforms have become
 a popular source of listening to music. One such platform is Spotify.
 Spotify first launched in 2008 and has grown to offer more than 60
 million songs. Spotify contains songs from a variety of genres and keeps
