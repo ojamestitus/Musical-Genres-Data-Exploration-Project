@@ -181,7 +181,7 @@ There appears to be no significant relationship between track popularity and lou
 
 ## Conclusions
 
-From our study we are able to say that while there are a few defining characteristics for each genre those characteristics do not predict the popularity of the track. It was interesting though to note the unique characteristics that made each genre have it's own appeal. Ultimately it is not terribly surprising that there is no one characteristic that will make a song more popular. With the wide range of people who listen to music there should be a wide range of traits that are desirable and will result in a popular song.
+From our study we are able to say that while there are a few defining characteristics for each genre those characteristics do not predict the popularity of the track. It was interesting though to note the unique characteristics that made each genre have it's own appeal. Ultimately it is not terribly surprising that there is not one characteristic that will make a song more popular. With the wide range of people who listen to music there should be a wide range of traits that are desirable and will result in a popular song.
 
 If we had time to further our study we would like to further compare the genres that we found were most similar to determine what characteristics are the same and what characteristics are different. In that comparison we would like to include data on other characteristics that we did not include here. 
 
@@ -189,7 +189,7 @@ Another thing that we would be interesting in studying given more time is lookin
 
 The final additional analysis that we would add would be to determine if there is a relationship between the characteristics that are similar between genres. For example we found that energy and loudness were similar for pop and latin which leads us to question whether there would be a relationship betwen the energy and the loudness of the track.
 
-Ultimately while we can pick apart the different genres by looking at various characteristics of the tracks music is not something that picks us apart as people; music brings us together. Whether you like rap, enjoy some good R&B, or get down with some rock music is what brings people from every walk of life together. So don't over think it just go pull up spotify and relax to your favorite tunes.
+Ultimately while we can pick apart the different genres by looking at various characteristics of the tracks music is not something that picks us apart as people; music brings us together. Whether you like rap, enjoy some good R&B, or get down with some rock, music is what brings people from every walk of life together. So don't over think it just go pull up spotify and relax to your favorite tunes.
 
 ## Group Members
 Neetu Regmi 

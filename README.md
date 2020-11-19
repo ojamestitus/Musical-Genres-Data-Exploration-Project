@@ -223,7 +223,7 @@ and latin were similar in duration and latin and rap are similar in
 duration it was not surprising when it was found that rap and pop also
 have tracks of similar length. When looking at the popularity of genres
 we found that pop and latin are similar and that rock and rap are
-similar. Though the strength of the similirites between rock and rap for
+similar. Though the strength of the similarites between rock and rap for
 popularity ratings is not near as strong as the similarity between pop
 and latin.
 
@@ -236,7 +236,7 @@ the popularity rating.
 ### Testing for linear relationships between track characteristics and popularity.
 
 As we perform tests to determine if there are linear relationships
-between the track characteristics and the popularity of the track we
+between the track characteristics and th  e popularity of the track we
 also looked at the scatterplots. For many of the scatterplots we were
 able to see fairly clearly that there would not be a linear relationship
 between the characteristics and the popularity.
@@ -299,7 +299,7 @@ From our study we are able to say that while there are a few defining
 characteristics for each genre those characteristics do not predict the
 popularity of the track. It was interesting though to note the unique
 characteristics that made each genre have it’s own appeal. Ultimately it
-is not terribly surprising that there is no one characteristic that will
+is not terribly surprising that there is not one characteristic that will
 make a song more popular. With the wide range of people who listen to
 music there should be a wide range of traits that are desirable and will
 result in a popular song.
@@ -310,7 +310,7 @@ are the same and what characteristics are different. In that comparison
 we would like to include data on other characteristics that we did not
 include here.
 
-Another thing that we would be interesting in studying given more time
+Another thing that we would be interested in studying given more time
 is looking at other genres as well as including a few subgenres. We
 recognize that the genres that we studied are not all encompassing and
 there are other genres that would be interesting to collect data on.
@@ -322,9 +322,9 @@ similar for pop and latin which leads us to question whether there would
 be a relationship betwen the energy and the loudness of the track.
 
 Ultimately while we can pick apart the different genres by looking at
-various characteristics of the tracks music is not something that picks
+various characteristics of the tracks, music is not something that picks
 us apart as people; music brings us together. Whether you like rap,
-enjoy some good R\&B, or get down with some rock music is what brings
+enjoy some good R\&B, or get down with some rock, music is what brings
 people from every walk of life together. So don’t over think it just go
 pull up spotify and relax to your favorite tunes.
 
