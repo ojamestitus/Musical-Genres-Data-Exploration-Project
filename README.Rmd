@@ -1,10 +1,14 @@
 ---
 title: "STAT 850 Final Project"
 author: "Neetu Regmi, Cassie Tangen, Oliver Titus"
-keywords: [music, spotify, dance]
-output: 
-  pagedown::jss_paged:
+date: "`r Sys.Date()`"
+output:
+  pagedown::html_paged:
+    toc: false
+    # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
     self_contained: false
+# uncomment this line to produce HTML and PDF in RStudio:
+#knit: pagedown::chrome_print
 ---
 
 ```{r setup, include=FALSE}
@@ -124,7 +128,9 @@ spotify_songs_rock<-filter(spotify_songs, playlist_genre=="rock")
 
 # Results
 
-We ran a few different tests on our data to determine if there is a difference in our genres based on the 5 track characteristics we selected, then to determine if any of those characteristics had an impact on the overall popularity of the track.
+We ran a few different tests on our data to determine if there is a difference in our genres based on the 5 track characteristics we selected, then to determine if any of those characteristics had an impact on the overall popularity of the track. We ran ANOVA tests and linear regressions tests.
+
+## ANOVA Tests
 
 First an ANOVA test was performed to determine if there is a statistical difference between the genres when looking at each of the track trait variables. We performed an ANOVA test on each of the characteristic. The results from the ANOVA test can be found in the appendix. Interestingly even though we guessed that there may not be a statistical difference with the duration and the loudness of tracks  between the genres we found in all of the overall F-tests that we should reject the null hypothesis that the mean speechiness, energy, danceability, loudness, duration, and popularity are the same. This means we should conclude that there is evidence to support that there is a difference with all of these characteristics across each genre. Since we found that there is a difference naturally we should investigate to see which genres are the same and which are different. To make this comparison we have used the Tukey test to determine which genres are different that the others.
 
@@ -134,7 +140,7 @@ We were able to determine that pop and latin are similar in energy, loudness, an
 
 After analyzing the differences between the genres with the ANOVA test we find that pop and latin are very similar in characteristics and also have very similar popularity ratings. This leads us further to guess that there will be a relationship between the track characteristics and the popularity rating.
 
-## Testing for linear relationships between track characteristics and popularity. 
+## Linear Regression Tests 
 As we perform tests to determine if there are linear relationships between the track characteristics and the popularity of the track we also looked at the scatterplots. For many of the scatterplots we were able to see fairly clearly that there would not be a linear relationship between the characteristics and the popularity. 
 
 ### Danceability
@@ -204,14 +210,14 @@ Spotify. (2020, November 10). Retrieved from Wikipedia: https://en.wikipedia.org
 
 # Appendix: Summary Statistics and Results Tables
 
-## Summary Statistics
+## Summary Statistics (Means)
 
 ```{r, warning=F, message=F, echo=F}
-summary_table1<- group_by(spotify_songs, playlist_genre) %>% summarise(count=n(), mean_loudness=mean(loudness), mean_duration_in_ms=mean(duration_ms), mean_danceability=mean(danceability))
+summary_table1<- group_by(spotify_songs, playlist_genre) %>% summarise(count=n(), loudness=mean(loudness), duration=mean(duration_ms), danceability=mean(danceability))
 
-summary_table2<- group_by(spotify_songs, playlist_genre) %>% summarise(count=n(), mean_speechiness=mean(speechiness), mean_energry=mean(energy), mean_mean_popularity=mean(track_popularity))
+summary_table2<- group_by(spotify_songs, playlist_genre) %>% summarise(count=n(), speechiness=mean(speechiness), energry=mean(energy), popularity=mean(track_popularity))
 
-summary_table1 %>% kable()
+summary_table1 %>% kable() 
 summary_table2 %>% kable()
 ```
 
