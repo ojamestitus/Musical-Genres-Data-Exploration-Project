@@ -7,16 +7,30 @@ output:
     toc: false
     # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
     self_contained: false
+    css:
+      - default-fonts
+      - default
+      - custom.css
+
 # uncomment this line to produce HTML and PDF in RStudio:
 #knit: pagedown::chrome_print
 ---
+
+```{css, echo = F, include = T}
+
+table {
+  font-size:75%
+}
+
+
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, cache = T)
 options(digits = 3)
 ```
 
-```{r load-sas-libraries, echo = F, message = F, warning = F}
+```{r load-sas-libraries, echo = F, message = F, warning = F, include = F}
 
 saspath <- "/usr/local/SASHome/SASFoundation/9.4/bin/sas_en" # Your SAS path goes here
 sasopts <- "-ls 75"
